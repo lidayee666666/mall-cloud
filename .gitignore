@@ -1,0 +1,6 @@
+# 如果之前没有这些规则，可以添加
+.idea/
+*.iml
+target/
+logs/
+.DS_Store
