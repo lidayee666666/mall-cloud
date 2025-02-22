@@ -154,6 +154,8 @@
         <module>mall-order</module>
         <module>mall-payment</module>
         <module>mall-ai</module>
+        <module>untitled</module>
+        <module>untitled</module>
     </modules>
 
     <!-- 构建配置 -->
