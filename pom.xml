@@ -83,7 +83,7 @@
                 <version>${druid.version}</version>
             </dependency>
 
-            <!-- Hutool -->
+            <!-- hutool -->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
