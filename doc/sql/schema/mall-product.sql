@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `product` (
     `image` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '商品图片',
     `category` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '类目名称',
     `sold` int DEFAULT '0' COMMENT '销量',
+    `comment_count` int DEFAULT '0' COMMENT '评论数',
     `status` int DEFAULT '2' COMMENT '商品状态 1-正常，2-下架，3-删除',
     `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
