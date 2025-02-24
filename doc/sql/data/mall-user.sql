@@ -1,8 +1,8 @@
+# 注：由于应用层采用的密码加密算法未确定，此处的密码为无效值，仅做测试使用
 USE `mall-user`;
 
-# 注：由于应用层采用的密码加密算法未确定，此处的密码为无效值，仅做测试使用
-INSERT INTO `user` (id, username, password, phone)
-VALUES (1, 'kafu', '123456', '13900000000');
+INSERT INTO user (id, username, password, phone, is_platform_admin)
+VALUES (1, 'admin', '123456', '13900000000', 1);
 
 
 INSERT INTO `address` (id, user_id, province, city, town, phone, street, contact, is_default, notes)

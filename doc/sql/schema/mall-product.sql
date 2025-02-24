@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS `product`;
 
 CREATE TABLE IF NOT EXISTS `product` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '商品id',
+    `store_id` bigint NOT NULL COMMENT '商家id',
     `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商品名称',
     `price` int NOT NULL DEFAULT '0' COMMENT '价格（分）',
     `stock` int UNSIGNED NOT NULL COMMENT '库存数量',

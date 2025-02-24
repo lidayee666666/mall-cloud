@@ -6,7 +6,7 @@ USE `mall-cart`;
 DROP TABLE IF EXISTS `cart`;
 
 CREATE TABLE IF NOT EXISTS `cart` (
-    `id` bigint NOT NULL AUTO_INCREMENT COMMENT '购物车条目id ',
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT '购物车条目id',
     `user_id` bigint NOT NULL COMMENT '用户id',
     `product_id` bigint NOT NULL COMMENT '商品id',
     `num` int NOT NULL DEFAULT '1' COMMENT '购买数量',
