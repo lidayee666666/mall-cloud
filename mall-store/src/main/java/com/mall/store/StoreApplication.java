@@ -1,13 +1,13 @@
-package com.mall.gateway;
+package com.mall.store;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
-//springboot程序的启动类
 @SpringBootApplication
-public class GatewayApplication {
+@MapperScan("com.mall.store.mapper")
+public class StoreApplication {
     public static void main(String[] args) {
-        SpringApplication.run(GatewayApplication.class);
+        SpringApplication.run(StoreApplication.class);
     }
 }
