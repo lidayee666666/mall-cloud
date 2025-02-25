@@ -83,7 +83,7 @@
                 <version>${druid.version}</version>
             </dependency>
 
-            <!-- Hutool -->
+            <!-- hutool -->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
@@ -154,6 +154,8 @@
         <module>mall-order</module>
         <module>mall-payment</module>
         <module>mall-ai</module>
+        <module>mall-store</module>
+        <module>mall-api</module>
     </modules>
 
     <!-- 构建配置 -->
