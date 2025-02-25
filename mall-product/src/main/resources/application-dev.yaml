@@ -1,0 +1,10 @@
+mall:
+  db:
+    host: 192.168.145.128
+    database: mall-product
+    user: root
+    password: 123
+  swagger:
+    title: "抖音电商商品服务接口文档"
+    description: "抖音电商商品服务接口文档"
+    package: com.mall.product.controller
