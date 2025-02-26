@@ -17,7 +17,7 @@ spring:
         - id: user
           uri: lb://mall-user
           predicates:
-            - Path=/users/api/**,/addresses/api/**
+            - Path=/users/api/**,/addresses/api/**,/captcha
         - id: payment
           uri: lb://mall-payment
           predicates:
@@ -30,3 +30,11 @@ spring:
           uri: lb://mall-ai
           predicates:
             - Path=/ai/api/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+        add-to-simple-url-handler-mapping: true
