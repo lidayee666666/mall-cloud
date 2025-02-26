@@ -1,4 +1,4 @@
-package com.mall.common.config.constant;
+package com.mall.common.constant;
 /**
  * 状态常量，启用或者禁用
  */
