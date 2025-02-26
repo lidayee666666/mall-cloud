@@ -1,4 +1,4 @@
-package com.mall.common.config.context;
+package com.mall.common.context;
 
 public class BaseContext {
     public static ThreadLocal<Long> threadLocal = new ThreadLocal<>();

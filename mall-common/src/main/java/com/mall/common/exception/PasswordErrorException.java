@@ -1,4 +1,4 @@
-package com.mall.common.config.exception;
+package com.mall.common.exception;
 /**
  * 密码错误异常
  */

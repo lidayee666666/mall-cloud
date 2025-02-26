@@ -1,4 +1,4 @@
-package com.mall.common.config.json;
+package com.mall.common.json;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
