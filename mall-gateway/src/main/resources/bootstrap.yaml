@@ -3,4 +3,30 @@ spring:
     name: gateway
   cloud:
     nacos:
-      server-addr: 192.168.145.128:8848 # nacos地址
+      server-addr: 172.18.160.51:8848  #192.168.145.128:8848 # nacos地址
+    gateway:
+      routes:
+        - id: product
+          uri: lb://mall-product
+          predicates:
+            - Path=/products/api/**,/search/api/**
+        - id: cart
+          uri: lb://mall-cart
+          predicates:
+            - Path=/carts/api/**
+        - id: user
+          uri: lb://mall-user
+          predicates:
+            - Path=/users/api/**,/addresses/api/**
+        - id: payment
+          uri: lb://mall-payment
+          predicates:
+            - Path=/payments/api/**
+        - id: order
+          uri: lb://mall-order
+          predicates:
+            - Path=/orders/api/**
+        - id: ai
+          uri: lb://mall-ai
+          predicates:
+            - Path=/ai/api/**
