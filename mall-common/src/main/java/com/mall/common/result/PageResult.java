@@ -1,4 +1,4 @@
-package com.mall.common.config.result;
+package com.mall.common.result;
 
 
 import lombok.AllArgsConstructor;

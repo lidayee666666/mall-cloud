@@ -1,4 +1,4 @@
-package com.mall.common.config.exception;
+package com.mall.common.exception;
 
 /**
  * 账号被锁定异常
