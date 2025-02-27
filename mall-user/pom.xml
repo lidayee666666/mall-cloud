@@ -51,5 +51,12 @@
             <artifactId>spring-security-rsa</artifactId>
             <version>1.0.9.RELEASE</version>
         </dependency>
+
+        <!-- bootstrap-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
     </dependencies>
 </project>
