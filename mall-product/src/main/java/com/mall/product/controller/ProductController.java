@@ -1,5 +1,8 @@
 package com.mall.product.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mall.common.domain.PageDTO;
+import com.mall.common.domain.PageQuery;
 import com.mall.common.result.Result;
 import com.mall.product.pojo.dto.ProductDTO;
 import com.mall.product.pojo.entity.Product;
@@ -13,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/mall-product")
+@RequestMapping("/products/api")
 @Api(tags = "商品服务接口")
 @Slf4j
 public class ProductController {
@@ -94,5 +97,20 @@ public class ProductController {
         log.info("更新商品信息:{}", productDTO);
         productService.updateProduct(productDTO);
         return Result.success();
+    }
+
+    /**
+     * 分页查询商品
+     * @param query
+     * @return
+     */
+    @ApiOperation("分页查询商品")
+    @GetMapping("/page")
+    public Result<PageDTO<ProductDTO>> queryItemByPage(PageQuery query) {
+        // 1.分页查询
+        Page<Product> result = productService.page(query.toMpPage("update_time", false));
+        // 2.封装并返回
+        PageDTO<ProductDTO> pageDTO = PageDTO.of(result, ProductDTO.class);
+        return Result.success(pageDTO);
     }
 }

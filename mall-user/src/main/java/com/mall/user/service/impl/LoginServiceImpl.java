@@ -1,6 +1,7 @@
 package com.mall.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.mall.common.exception.LoginFailedException;
 import com.mall.user.config.JwtProperties;
 import com.mall.user.mapper.UserMapper;
 import com.mall.user.pojo.User;
@@ -36,11 +37,11 @@ public class LoginServiceImpl implements LoginService {
 
         // 3.校验是否禁用
         if (user.getStatus() == 0) {
-            throw new RuntimeException("用户被冻结");
+            throw new LoginFailedException("用户被冻结");
         }
         // 4.校验密码
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("用户名或密码错误");
+            throw new LoginFailedException("用户名或密码错误");
         }
         // 5.生成TOKEN
         String token = jwtTool.createToken((long)user.getId(), jwtProperties.getTokenTTL());

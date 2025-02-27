@@ -1,5 +1,6 @@
 package com.mall.user.controller;
 
+import com.mall.common.result.Result;
 import com.mall.user.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,7 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
+
     /**
      * 接收 username 和 password，返回:
      * jwt-token
@@ -24,11 +26,12 @@ public class LoginController {
      * phone
      * balance
      */
-
     @PostMapping("/users/api/login")
-    public Map<String, String> login(@RequestParam Map<String, String> map) {
+    public Result<Map<String, String>> login(@RequestParam Map<String, String> map) {
         String username = map.get("username");
         String password = map.get("password");
-        return loginService.login(username, password);
+        System.out.println(username + " " + password);
+        Map<String, String> login = loginService.login(username, password);
+        return Result.success(login);
     }
 }
