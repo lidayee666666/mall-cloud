@@ -155,6 +155,7 @@
         <module>mall-payment</module>
         <module>mall-ai</module>
         <module>mall-store</module>
+        <module>mall-api</module>
     </modules>
 
     <!-- 构建配置 -->
