@@ -1,4 +1,4 @@
-package com.mall.common.config.constant;
+package com.mall.common.constant;
 
     /**
      * 信息提示常量类
@@ -17,6 +17,7 @@ package com.mall.common.config.constant;
         public static final String PASSWORD_EDIT_FAILED = "密码修改失败";
         public static final String ORDER_STATUS_ERROR = "订单状态错误";
         public static final String ORDER_NOT_FOUND = "订单不存在";
+        public static final String USER_PERMISSION_ERROR = "当前用户权限不足";
 
     }
 
