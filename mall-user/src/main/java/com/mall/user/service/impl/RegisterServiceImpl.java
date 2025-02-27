@@ -1,6 +1,7 @@
 package com.mall.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.mall.common.result.Result;
 import com.mall.user.mapper.UserMapper;
 import com.mall.user.pojo.User;
 import com.mall.user.service.RegisterService;
@@ -57,48 +58,56 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public Map<String, String> register(String username, String password, String confirmedPassword, String phone) {
+    public Result<String> register(String username, String password, String confirmedPassword, String phone) {
         Map<String, String> map = new HashMap<>();
 
         if(username == null) {
-            map.put("error_message", "用户名不能为空");
-            return map;
+//            map.put("error_message", "用户名不能为空");
+//            return map;
+            return Result.error("用户名不能为空");
         }
         if(password == null || confirmedPassword == null) {
-            map.put("error_message", "密码不能为空");
-            return map;
+//            map.put("error_message", "密码不能为空");
+//            return map;
+            return Result.error("密码不能为空");
         }
 
         username = username.trim();
         if(username.length() == 0) {
-            map.put("error_message", "用户名不能为空");
-            return map;
+//            map.put("error_message", "用户名不能为空");
+//            return map;
+            return Result.error("用户名不能为空");
         }
         if(password.length() == 0 || confirmedPassword.length() == 0) {
-            map.put("error_message", "密码不能为空");
-            return map;
+//            map.put("error_message", "密码不能为空");
+//            return map;
+            return Result.error("密码不能为空");
         }
 
         if(username.length() > 20) {
-            map.put("error_message", "用户名长度不能大于20");
-            return map;
+//            map.put("error_message", "用户名长度不能大于20");
+//            return map;
+            return Result.error("用户名长度不能大于20");
         }
         if(password.length() > 20 || confirmedPassword.length() > 20) {
-            map.put("error_message", "密码长度不能大于20");
-            return map;
+//            map.put("error_message", "密码长度不能大于20");
+//            return map;
+            return Result.error("密码长度不能大于20");
         }
 
         if(!password.equals(confirmedPassword)) {
-            map.put("error_message", "两次输入的密码不一致");
-            return map;
+//            map.put("error_message", "两次输入的密码不一致");
+//            return map;
+            return Result.error("两次输入的密码不一致");
         }
 
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username);
         List<User> users = userMapper.selectList(queryWrapper);
         if (!users.isEmpty()) {
-            map.put("error_message", "账号已存在");
-            return map;
+//            map.put("error_message", "账号已存在");
+//            return map;
+            return Result.error("账号已存在");
         }
 
         String encodedPassword = passwordEncoder.encode(password);
@@ -106,7 +115,7 @@ public class RegisterServiceImpl implements RegisterService {
         User user = new User(null, username, encodedPassword, phone, null, null, null, null);
         userMapper.insert(user);
 
-        map.put("error_message", "success");
-        return map;
+//        map.put("error_message", "success");
+        return Result.success("注册成功");
     }
 }

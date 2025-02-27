@@ -1,5 +1,6 @@
 package com.mall.user.controller;
 
+import com.mall.common.result.Result;
 import com.mall.user.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,7 @@ public class RegisterController {
     private RegisterService registerService;
 
     @PostMapping("/users/api/register")
-    public Map<String, String> register(@RequestBody Map<String, String> map) {
+    public Result<String> register(@RequestBody Map<String, String> map) {
         String username = map.get("username");
         String password = map.get("password");
         String confirmedPassword = map.get("confirmedPassword");

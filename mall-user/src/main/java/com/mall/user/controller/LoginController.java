@@ -1,5 +1,6 @@
 package com.mall.user.controller;
 
+import com.mall.common.result.Result;
 import com.mall.user.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -26,7 +27,7 @@ public class LoginController {
     private StringRedisTemplate stringRedisTemplate;
 
     @PostMapping("/users/api/login")
-    public Map<String, String> login(@RequestBody Map<String, String> map) {
+    public Result<Map<String, String>> login(@RequestBody Map<String, String> map) {
         String username = map.get("username");
         String password = map.get("password");
         String s = stringRedisTemplate.opsForValue().get(map.get("VerKey"));

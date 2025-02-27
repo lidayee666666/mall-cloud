@@ -1,6 +1,7 @@
 package com.mall.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.mall.common.result.Result;
 import com.mall.user.config.JwtProperties;
 import com.mall.user.mapper.UserMapper;
 import com.mall.user.pojo.User;
@@ -26,7 +27,7 @@ public class LoginServiceImpl implements LoginService {
     private JwtProperties jwtProperties;
 
     @Override
-    public Map<String, String> login(String username, String password, String s, String Yzm) {
+    public Result<Map<String, String>> login(String username, String password, String s, String Yzm) {
         // 1.根据用户名在数据库中查询用户
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username);
@@ -36,27 +37,31 @@ public class LoginServiceImpl implements LoginService {
         // 2.检验验证码
         if (!s.equalsIgnoreCase(Yzm)) {
             map.put("error_message", "验证码输入错误");
-            return map;
+//            return map;
+            return Result.success(map);
         }
 
         // 3.检验是否为空
 //        Assert.notNull(user, "用户名错误");
         if (user == null) {
             map.put("error_message", "用户名错误");
-            return map;
+//            return map;
+            return Result.success(map);
         }
 
         // 4.校验是否禁用
         if (user.getStatus() == 0) {
             map.put("error_message", "用户被冻结");
-            return map;
+//            return map;
+            return Result.success(map);
 //          throw new RuntimeException("用户被冻结");
         }
         // 5.校验密码
         if (!passwordEncoder.matches(password, user.getPassword())) {
             map.put("error_message", "用户名或密码错误");
 //            throw new RuntimeException("用户名或密码错误");
-            return map;
+//            return map;
+            return Result.success(map);
         }
         // 6.生成TOKEN
         String token = jwtTool.createToken((long)user.getId(), jwtProperties.getTokenTTL());
@@ -67,6 +72,6 @@ public class LoginServiceImpl implements LoginService {
         map.put("username", user.getUsername());
         map.put("phone", user.getPhone());
         map.put("balance", user.getBalance().toString());
-        return map;
+        return Result.success(map);
     }
 }
