@@ -26,26 +26,42 @@ public class LoginServiceImpl implements LoginService {
     private JwtProperties jwtProperties;
 
     @Override
-    public Map<String, String> login(String username, String password) {
+    public Map<String, String> login(String username, String password, String s, String Yzm) {
         // 1.根据用户名在数据库中查询用户
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username);
         User user = userMapper.selectOne(queryWrapper);
-        // 2.检验是否为空
-        Assert.notNull(user, "用户名错误");
+        Map<String, String> map = new HashMap<>();
 
-        // 3.校验是否禁用
+        // 2.检验验证码
+        if (!s.equalsIgnoreCase(Yzm)) {
+            map.put("error_message", "验证码输入错误");
+            return map;
+        }
+
+        // 3.检验是否为空
+//        Assert.notNull(user, "用户名错误");
+        if (user == null) {
+            map.put("error_message", "用户名错误");
+            return map;
+        }
+
+        // 4.校验是否禁用
         if (user.getStatus() == 0) {
-            throw new RuntimeException("用户被冻结");
+            map.put("error_message", "用户被冻结");
+            return map;
+//          throw new RuntimeException("用户被冻结");
         }
-        // 4.校验密码
+        // 5.校验密码
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("用户名或密码错误");
+            map.put("error_message", "用户名或密码错误");
+//            throw new RuntimeException("用户名或密码错误");
+            return map;
         }
-        // 5.生成TOKEN
+        // 6.生成TOKEN
         String token = jwtTool.createToken((long)user.getId(), jwtProperties.getTokenTTL());
 
-        Map<String, String> map = new HashMap<>();
+        map.put("error_message", "success");
         map.put("jwt-token", token);
         map.put("id", user.getId().toString());
         map.put("username", user.getUsername());
