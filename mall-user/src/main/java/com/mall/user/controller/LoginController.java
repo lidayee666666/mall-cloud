@@ -17,7 +17,7 @@ public class LoginController {
     private LoginService loginService;
     /**
      * 接收 username、password、VerKey、Yzm，返回:
-     * jwt-token
+     * jwtToken
      * id
      * username
      * phone
