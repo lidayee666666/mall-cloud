@@ -14,7 +14,7 @@ douyinmall:
   auth:
     excludePaths: # 无需登录校验的路径
       - /search/**
-      - /users/api/login
+      - /users/api/login/**
       - /users/api/register
       - /products/api/select
       - /captcha

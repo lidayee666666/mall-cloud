@@ -7,4 +7,5 @@ import org.springframework.web.bind.annotation.GetMapping;
 @FeignClient(value = "mall-user")
 public interface UserClient {
 
+
 }
