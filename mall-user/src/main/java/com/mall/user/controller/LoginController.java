@@ -30,6 +30,7 @@ public class LoginController {
     public Result<Map<String, String>> login(@RequestBody Map<String, String> map) {
         String username = map.get("username");
         String password = map.get("password");
+        System.out.println(map);
         String s = stringRedisTemplate.opsForValue().get(map.get("VerKey"));
         String Yzm = map.get("Yzm");
         return loginService.login(username, password, s, Yzm);

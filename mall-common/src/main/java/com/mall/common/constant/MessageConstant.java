@@ -19,5 +19,7 @@ package com.mall.common.constant;
         public static final String ORDER_NOT_FOUND = "订单不存在";
         public static final String USER_PERMISSION_ERROR = "当前用户权限不足";
 
+        public static final String PRODUCT_STATUS_ERROR = "商品状态错误，不能删除";
+
     }
 
