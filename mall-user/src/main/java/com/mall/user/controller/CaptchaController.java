@@ -1,5 +1,6 @@
 package com.mall.user.controller;
 
+import com.mall.common.result.Result;
 import com.wf.captcha.SpecCaptcha;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -18,7 +19,7 @@ public class CaptchaController {
     private RedisTemplate<String, String> redisTemplate;
 
     @RequestMapping("/captcha")
-    public Map<String, String> captcha() throws Exception {
+    public Result<Map<String, String>> captcha() throws Exception {
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
         String verCode = specCaptcha.text().toLowerCase();//生成验证码
         String key = UUID.randomUUID().toString();//在后端生成一个随机的key
@@ -30,6 +31,6 @@ public class CaptchaController {
         map.put("verCode", specCaptcha.toBase64());//把生成图片验证码,转为base64格式
         map.put("error_message", "生成成功");
         // 将key和base64返回给前端
-        return map;
+        return Result.success(map);
     }
 }
