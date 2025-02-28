@@ -67,7 +67,7 @@ public class LoginServiceImpl implements LoginService {
         String token = jwtTool.createToken((long)user.getId(), jwtProperties.getTokenTTL());
 
         map.put("error_message", "success");
-        map.put("jwt-token", token);
+        map.put("jwtToken", token);
         map.put("id", user.getId().toString());
         map.put("username", user.getUsername());
         map.put("phone", user.getPhone());
