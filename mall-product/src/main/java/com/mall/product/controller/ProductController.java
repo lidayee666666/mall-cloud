@@ -39,7 +39,7 @@ public class ProductController {
      * 获取所有商品列表
      * @return
      */
-    @GetMapping
+    @GetMapping("/select")
     @ApiOperation("获取所有商品")
     public Result<List<Product>> list() {
         log.info("获取所有商品");

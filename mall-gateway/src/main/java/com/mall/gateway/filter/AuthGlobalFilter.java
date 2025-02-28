@@ -60,14 +60,14 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         }
 
         // TODO 5.如果有效，传递用户信息
-//        System.out.println("userId = " + userId);
-//        System.out.println("token 有效");
+        System.out.println("userId = " + userId);
+        System.out.println("token 有效");
         String userInfo = userId.toString();
         ServerWebExchange ex = exchange.mutate()
                 .request(b -> b.header("user-info", userInfo))
                 .build();
         // 6.放行
-        return chain.filter(exchange);
+        return chain.filter(ex);
     }
 
     private boolean isExclude(String antPath) {
