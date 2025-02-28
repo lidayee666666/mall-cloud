@@ -12,7 +12,7 @@ CREATE TABLE `store` (
     `name` VARCHAR(100) NOT NULL COMMENT '商家名称',
     `status` TINYINT NOT NULL DEFAULT 0 COMMENT '商家状态，1启用，0关闭',
     `is_platform` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否平台级商家',
-    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB COMMENT='租户信息表';
 

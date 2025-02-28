@@ -17,10 +17,12 @@ spring:
   #  profiles:
 #    active: dev
   datasource:
-    url: jdbc:mysql://localhost:3306/mall-user?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    # url: jdbc:mysql://localhost:3306/mall-user?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.145.128:3306/mall-user?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: root
+    # password: root
+    password: 123
   redis:
     host: localhost  # Redis 服务器地址
     port: 6379       # Redis 端口
@@ -32,7 +34,7 @@ douyinmall:
     location: classpath:douyinmall.jks # 秘钥地址
     alias: hmall # 秘钥别名
     password: hmall123 # 秘钥文件密码
-    tokenTTL: 30m # 登录有效期
+    tokenTTL: 300m # 登录有效期
 
 mybatis-plus:
   configuration:
