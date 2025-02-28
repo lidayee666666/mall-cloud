@@ -1,6 +1,9 @@
 package com.mall.user.service.impl;
 
+import com.alibaba.nacos.shaded.org.checkerframework.checker.units.qual.A;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.mall.api.client.StoreClient;
+import com.mall.api.domain.entity.Staff;
 import com.mall.common.result.Result;
 import com.mall.user.config.JwtProperties;
 import com.mall.user.mapper.UserMapper;
@@ -25,9 +28,11 @@ public class LoginServiceImpl implements LoginService {
     private JwtTool jwtTool;
     @Autowired
     private JwtProperties jwtProperties;
+    @Autowired
+    private StoreClient storeClient;
 
     @Override
-    public Result<Map<String, String>> login(String username, String password, String s, String Yzm) {
+    public Map<String, String> login(String username, String password, String s, String Yzm) {
         // 1.根据用户名在数据库中查询用户
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username);
@@ -38,7 +43,7 @@ public class LoginServiceImpl implements LoginService {
         if (!s.equalsIgnoreCase(Yzm)) {
             map.put("error_message", "验证码输入错误");
 //            return map;
-            return Result.success(map);
+            return map;
         }
 
         // 3.检验是否为空
@@ -46,14 +51,14 @@ public class LoginServiceImpl implements LoginService {
         if (user == null) {
             map.put("error_message", "用户名错误");
 //            return map;
-            return Result.success(map);
+            return map;
         }
 
         // 4.校验是否禁用
         if (user.getStatus() == 0) {
             map.put("error_message", "用户被冻结");
 //            return map;
-            return Result.success(map);
+            return map;
 //          throw new RuntimeException("用户被冻结");
         }
         // 5.校验密码
@@ -61,7 +66,7 @@ public class LoginServiceImpl implements LoginService {
             map.put("error_message", "用户名或密码错误");
 //            throw new RuntimeException("用户名或密码错误");
 //            return map;
-            return Result.success(map);
+            return map;
         }
         // 6.生成TOKEN
         String token = jwtTool.createToken((long)user.getId(), jwtProperties.getTokenTTL());
@@ -72,6 +77,24 @@ public class LoginServiceImpl implements LoginService {
         map.put("username", user.getUsername());
         map.put("phone", user.getPhone());
         map.put("balance", user.getBalance().toString());
-        return Result.success(map);
+        return map;
+    }
+
+    @Override
+    public Map<String, String> staffLogin(String username, String password, String s, String yzm) {
+        Map<String, String> login = login(username, password, s, yzm);
+        if(!"success".equals(login.get("error_message"))) {
+            return login;
+        }
+        Long id = Long.parseLong(login.get("id"));
+        Result<Staff> staffResult = storeClient.getByUserId(id);
+        Staff staff = staffResult.getData();
+        if(staff == null) {
+            login.remove("jwtToken");
+            login.put("error_message", "该管理员不存在");
+            return login;
+        }
+        login.put("storeId", staff.getStoreId().toString());
+        return login;
     }
 }

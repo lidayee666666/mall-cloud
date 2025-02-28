@@ -106,7 +106,7 @@ public class ProductController {
      */
     @ApiOperation("分页查询商品")
     @GetMapping("/page")
-    public Result<PageDTO<ProductDTO>> queryItemByPage(PageQuery query) {
+    public Result<PageDTO<ProductDTO>> queryProductByPage(PageQuery query) {
         // 1.分页查询
         Page<Product> result = productService.page(query.toMpPage("update_time", false));
         // 2.封装并返回
