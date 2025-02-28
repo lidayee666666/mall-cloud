@@ -17,4 +17,13 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         queryWrapper.eq(Staff::getUserId, userId);
         return getOne(queryWrapper);
     }
+
+    @Override
+    public Staff getByUserId(Long id) {
+        LambdaQueryWrapper<Staff> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Staff::getUserId, id);
+        return getOne(queryWrapper);
+    }
+
+
 }

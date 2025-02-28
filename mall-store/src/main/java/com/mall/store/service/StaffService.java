@@ -5,4 +5,6 @@ import com.mall.api.domain.entity.Staff;
 
 public interface StaffService extends IService<Staff> {
     Staff getByUserId();
+
+    Staff getByUserId(Long id);
 }
