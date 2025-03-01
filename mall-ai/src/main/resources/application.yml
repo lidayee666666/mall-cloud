@@ -21,8 +21,8 @@ deepseek:
 logging:
   level:
     root: INFO
-    com.lql.race: DEBUG  # DEBUG 级别以查看详细日志
-    com.lql.race.service: DEBUG  # 特别是服务层的日志
+    com.mall.ai: DEBUG  # DEBUG 级别以查看详细日志
+    com.mall.ai.service: DEBUG  # 特别是服务层的日志
     org.springframework.web: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
