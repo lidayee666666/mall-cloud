@@ -16,7 +16,7 @@ public class DeepSeekController {
         this.deepSeekService = deepSeekService;
     }
 
-    @GetMapping(value = "/mall-ai/api/deepseek/chat-stream", produces = "text/event-stream")
+    @GetMapping(value = "/ai/api/deepseek/chat-stream", produces = "text/event-stream")
     public SseEmitter chatStream(@RequestParam String message) {
         return deepSeekService.chatStream(message);
     }
