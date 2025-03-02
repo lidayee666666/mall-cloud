@@ -27,4 +27,5 @@ public class User {
     private Date updateTime;
     private Integer status;
     private Integer balance;
+    private String avatar;
 }

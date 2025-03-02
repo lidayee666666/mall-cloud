@@ -77,6 +77,7 @@ public class LoginServiceImpl implements LoginService {
         map.put("username", user.getUsername());
         map.put("phone", user.getPhone());
         map.put("balance", user.getBalance().toString());
+        map.put("avatar", user.getAvatar());
         return map;
     }
 
