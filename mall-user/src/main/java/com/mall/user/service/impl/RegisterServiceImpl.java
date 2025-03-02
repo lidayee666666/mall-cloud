@@ -112,7 +112,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         String encodedPassword = passwordEncoder.encode(password);
 
-        User user = new User(null, username, encodedPassword, phone, null, null, null, null);
+        User user = new User(null, username, encodedPassword, phone, null, null, null, null, null);
         userMapper.insert(user);
 
 //        map.put("error_message", "success");
