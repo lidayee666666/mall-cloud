@@ -5,7 +5,7 @@ spring:
     url: jdbc:mysql://${mall.db.host:127.0.0.1}:${mall.db.port:3306}/${mall.db.database}?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${mall.db.user:root}
-    password: ${mall.db.password:123}
+    password: ${mall.db.password:root}
 
 mybatis-plus:
   configuration:
