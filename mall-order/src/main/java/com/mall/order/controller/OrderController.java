@@ -10,17 +10,19 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @Api(tags = "订单服务接口")
 @RestController
+@RequestMapping(path = "/orders")
 public class OrderController {
     @Autowired
     private OrdersAddService ordersAddService;
     @ApiOperation("添加订单")
-    @PostMapping("/orders/api/add")
+    @PostMapping("/api/add")
     public Result<String> addOrders(@RequestBody OrdersDTO ordersDTO) {
         return ordersAddService.addOrders(ordersDTO);
     }
@@ -28,7 +30,7 @@ public class OrderController {
     @Autowired
     private OrderInfoService orderInfoService;
     @ApiOperation("根据用户Id获取其订单")
-    @PostMapping("orders/api/infoByUserId")
+    @PostMapping("/api/infoByUserId")
     public Result<List<Orders>> getOrderInfoByUserId() {
         return orderInfoService.getOrderInfoByUserId();
     }
@@ -36,7 +38,7 @@ public class OrderController {
     @Autowired
     private OrderDetailInfoService orderDetailInfoService;
     @ApiOperation("根据订单Id获取订单详情")
-    @PostMapping("orders/api/infoByOrderId")
+    @PostMapping("/api/infoByOrderId")
     public Result<List<OrderDetail>> getOrderDetailInfoByOrderId(@RequestBody Long orderId) {
         return orderDetailInfoService.getOrderDetailInfoByOrderId(orderId);
     }
@@ -44,7 +46,7 @@ public class OrderController {
     @Autowired
     private OrdersPaidService ordersPaidService;
     @ApiOperation("支付结束后更改订单状态和支付时间")
-    @PostMapping("/orders/api/paymentUpdate")
+    @PostMapping("/api/paymentUpdate")
     public Result<String> updateOrdersPaid(@RequestBody Long orderId) {
         return ordersPaidService.updateOrdersPaid(orderId);
     }
@@ -52,7 +54,7 @@ public class OrderController {
     @Autowired
     private OrdersConsignService ordersConsignService;
     @ApiOperation("发货后更改订单状态和发货时间")
-    @PostMapping("/orders/api/consignUpdate")
+    @PostMapping("/api/consignUpdate")
     public Result<String> consign(@RequestBody  Long orderId) {
         return ordersConsignService.consign(orderId);
     }

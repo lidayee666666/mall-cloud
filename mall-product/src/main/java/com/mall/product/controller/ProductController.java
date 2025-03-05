@@ -27,16 +27,6 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    /**
-     * 第一个测试接口
-     * @return
-     */
-    @GetMapping("/hello")
-    @ApiOperation("初始化测试接口")
-    public Result<String> hello() {
-        log.info("hello world");
-        return Result.success("hello world");
-    }
 
     /**
      * 获取所有商品列表
