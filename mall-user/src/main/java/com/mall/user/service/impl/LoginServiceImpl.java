@@ -1,18 +1,16 @@
 package com.mall.user.service.impl;
 
-import com.alibaba.nacos.shaded.org.checkerframework.checker.units.qual.A;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mall.api.client.StoreClient;
 import com.mall.api.domain.entity.Staff;
 import com.mall.common.result.Result;
 import com.mall.user.config.JwtProperties;
 import com.mall.user.mapper.UserMapper;
-import com.mall.user.pojo.User;
+import com.mall.api.domain.entity.User;
 import com.mall.user.service.LoginService;
 import com.mall.user.utils.JwtTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashMap;

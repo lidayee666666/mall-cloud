@@ -2,6 +2,7 @@ package com.mall.user.controller;
 
 import com.mall.common.result.Result;
 import com.wf.captcha.SpecCaptcha;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @RestController
+@Slf4j
 public class CaptchaController {
 
     @Autowired
@@ -20,6 +22,7 @@ public class CaptchaController {
 
     @RequestMapping("/captcha")
     public Result<Map<String, String>> captcha() throws Exception {
+        log.info("用户获取验证码");
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
         String verCode = specCaptcha.text().toLowerCase();//生成验证码
         String key = UUID.randomUUID().toString();//在后端生成一个随机的key

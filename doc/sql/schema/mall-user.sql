@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE IF NOT EXISTS `user` (
     `id` bigint NOT NULL AUTO_INCREMENT,
-    'avatar' varchar(200) COMMENT '用户头像',
+    `avatar` varchar(200) COMMENT '用户头像',
     `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户名',
     `password` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '密码，加密存储',
     `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '注册手机号',
