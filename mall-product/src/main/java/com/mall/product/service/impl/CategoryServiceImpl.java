@@ -26,7 +26,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     private final UserClient userClient;
 
-    private final ProductService productService;
     @Override
     public void saveCategory(Category category) {
         if(!checkRole()) {
