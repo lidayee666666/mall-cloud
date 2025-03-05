@@ -1,6 +1,7 @@
-package com.mall.user.pojo;
+package com.mall.api.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,4 +29,6 @@ public class User {
     private Integer status;
     private Integer balance;
     private String avatar;
+    @TableField(value = "is_platform_admin")
+    private Boolean platformAdmin;
 }

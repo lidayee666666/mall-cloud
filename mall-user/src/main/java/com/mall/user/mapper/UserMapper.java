@@ -1,7 +1,7 @@
 package com.mall.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.mall.user.pojo.User;
+import com.mall.api.domain.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

@@ -16,6 +16,7 @@ douyinmall:
       - /search/**
       - /users/api/login/**
       - /users/api/register
-      - /products/api/**
+      - /products/api/select/**
+      - /products/api/categories/select/**
       - /captcha
       - /ai/api/**

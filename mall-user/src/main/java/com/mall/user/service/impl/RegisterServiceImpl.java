@@ -3,7 +3,7 @@ package com.mall.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mall.common.result.Result;
 import com.mall.user.mapper.UserMapper;
-import com.mall.user.pojo.User;
+import com.mall.api.domain.entity.User;
 import com.mall.user.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -112,7 +112,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         String encodedPassword = passwordEncoder.encode(password);
 
-        User user = new User(null, username, encodedPassword, phone, null, null, null, null, null);
+        User user = new User(null, username, encodedPassword, phone, null, null, null, null, null, false);
         userMapper.insert(user);
 
 //        map.put("error_message", "success");
