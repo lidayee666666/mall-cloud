@@ -1,11 +1,14 @@
 package com.mall.product.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.domain.PageDTO;
 import com.mall.common.domain.PageQuery;
 import com.mall.common.result.Result;
 import com.mall.product.pojo.dto.ProductDTO;
+import com.mall.product.pojo.entity.Category;
 import com.mall.product.pojo.entity.Product;
+import com.mall.product.service.CategoryService;
 import com.mall.product.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,7 +55,7 @@ public class ProductController {
      * @param id
      * @return
      */
-    @GetMapping("/{id}")
+    @GetMapping("/select/{id}")
     @ApiOperation("根据id查询商品")
     public Result<Product> getById(@PathVariable Long id) {
         log.info("根据id查询商品:{}", id);
@@ -105,12 +108,26 @@ public class ProductController {
      * @return
      */
     @ApiOperation("分页查询商品")
-    @GetMapping("/page")
+    @GetMapping("/select/page")
     public Result<PageDTO<ProductDTO>> queryProductByPage(PageQuery query) {
         // 1.分页查询
         Page<Product> result = productService.page(query.toMpPage("update_time", false));
         // 2.封装并返回
         PageDTO<ProductDTO> pageDTO = PageDTO.of(result, ProductDTO.class);
+        return Result.success(pageDTO);
+    }
+
+    /**
+     * 按照类型分页查询商品
+     * @param query
+     * @param categoryId
+     * @return
+     */
+    @ApiOperation("按类型查找商品")
+    @GetMapping("/page/{categoryId}")
+    public Result<PageDTO<ProductDTO>> queryProductWithCategoryByPage(PageQuery query, @PathVariable Long categoryId) {
+        log.info("按类型：{}查找商品：{}", categoryId, query);
+        PageDTO<ProductDTO> pageDTO = productService.queryProductWithCategoryByPage(query, categoryId);
         return Result.success(pageDTO);
     }
 }

@@ -21,5 +21,9 @@ package com.mall.common.constant;
 
         public static final String PRODUCT_STATUS_ERROR = "商品状态错误，不能删除";
 
+        public static final String CATEGORY_ALREADY_EXISTS_ERROR = "该种类已经存在";
+
+        public static final String CATEGORY_NOT_FOUND_ERROR = "该种类不存在";
+
     }
 

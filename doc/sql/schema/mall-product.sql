@@ -23,3 +23,18 @@ CREATE TABLE IF NOT EXISTS `product` (
     PRIMARY KEY (`id`),
     KEY `status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='商品表';
+
+USE `mall-product`;
+
+DROP TABLE IF EXISTS `categories`;
+
+CREATE TABLE IF NOT EXISTS `categories` (
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT '种类id',
+    `category` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '类目名称',
+    `product_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '商品数量',
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `creator` bigint DEFAULT NULL COMMENT '创建人',
+    `updater` bigint DEFAULT NULL COMMENT '修改人',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='商品种类表';
