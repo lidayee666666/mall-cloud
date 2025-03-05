@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '种类id',
     `category` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '类目名称',
-    `product_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '商品数量',
+    `product_num` bigint COMMENT '商品数量',
     `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `creator` bigint DEFAULT NULL COMMENT '创建人',
