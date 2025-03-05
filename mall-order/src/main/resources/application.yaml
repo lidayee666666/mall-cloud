@@ -1,0 +1,18 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: mall-order
+  datasource:
+    url: jdbc:mysql://localhost:3306/mall-order?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    #    url: jdbc:mysql://192.168.145.128:3306/mall-user?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    #    password: 123
+  redis:
+    host: localhost  # Redis 服务器地址
+    port: 6379       # Redis 端口
+    password:        # Redis 密码（如果没有密码，可以省略）
+    database: 0      # Redis 数据库索引
