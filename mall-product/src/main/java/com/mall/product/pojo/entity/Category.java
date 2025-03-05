@@ -29,7 +29,7 @@ public class Category implements Serializable {
     /**
      * 商品数量
      */
-    private String productNum;
+    private Long productNum;
 
     /**
      * 创建时间

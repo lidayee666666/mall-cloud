@@ -124,7 +124,7 @@ public class ProductController {
      * @return
      */
     @ApiOperation("按类型查找商品")
-    @GetMapping("/page/{categoryId}")
+    @GetMapping("/select/page/{categoryId}")
     public Result<PageDTO<ProductDTO>> queryProductWithCategoryByPage(PageQuery query, @PathVariable Long categoryId) {
         log.info("按类型：{}查找商品：{}", categoryId, query);
         PageDTO<ProductDTO> pageDTO = productService.queryProductWithCategoryByPage(query, categoryId);

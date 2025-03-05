@@ -41,6 +41,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
             throw new CategoryUniqueException(MessageConstant.CATEGORY_ALREADY_EXISTS_ERROR);
         }
 
+        category.setCreator(UserContext.getUser());
+        category.setUpdater(UserContext.getUser());
+        category.setProductNum(0L);
         save(category);
     }
 
