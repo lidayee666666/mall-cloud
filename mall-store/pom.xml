@@ -19,7 +19,12 @@
         <dependency>
             <groupId>com.lql.mall</groupId>
             <artifactId>mall-common</artifactId>
-            <version>${project.version}</version>
+        </dependency>
+
+        <!-- mall-api -->
+        <dependency>
+            <groupId>com.mall</groupId>
+            <artifactId>mall-api</artifactId>
         </dependency>
 
         <!-- Nacos Discovery -->
@@ -28,23 +33,11 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.mall</groupId>
-            <artifactId>mall-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
         <!-- bootstrap-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
     </dependencies>
-
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
 </project>

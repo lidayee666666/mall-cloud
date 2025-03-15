@@ -18,13 +18,6 @@
         <dependency>
             <groupId>com.lql.mall</groupId>
             <artifactId>mall-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <!-- Nacos Discovery -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
     </dependencies>
 </project>
