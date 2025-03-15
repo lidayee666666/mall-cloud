@@ -13,9 +13,8 @@ import com.mall.order.service.OrdersAddService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -30,10 +29,10 @@ public class OrdersAddServiceImpl implements OrdersAddService {
     @Override
     public Result<String> addOrders(OrdersDTO ordersDTO) {
         if (ordersDTO == null) {
-            Result.error("订单为空");
+            return Result.error("订单为空");
         }
         Map<Long, Integer> items = ordersDTO.getItems();
-        Integer totalFee = 0;
+        BigDecimal totalFee = BigDecimal.ZERO; // 使用 BigDecimal 计算总价
         Map<OrderDetailProduct, Integer> orderDetailProducts = new HashMap<>();
         for (Map.Entry<Long, Integer> entry : items.entrySet()) {
             Long productId = entry.getKey();
@@ -48,11 +47,12 @@ public class OrdersAddServiceImpl implements OrdersAddService {
                 return Result.error("库存不足");
             }
             orderDetailProducts.put(orderDetailProduct, quantity);
-            totalFee += quantity * orderDetailProduct.getPrice();
+            // 使用 BigDecimal 计算总价
+            totalFee = totalFee.add(orderDetailProduct.getPrice().multiply(BigDecimal.valueOf(quantity)));
         }
 
         Orders orders = new Orders(null,
-                totalFee,
+                totalFee, // 总价
                 ordersDTO.getPaymentType(),
                 UserContext.getUser(),
                 1,
@@ -63,7 +63,7 @@ public class OrdersAddServiceImpl implements OrdersAddService {
                 null,
                 null,
                 null
-                );
+        );
         ordersMapper.insert(orders);
         System.out.println(orders.getId());
 
@@ -75,11 +75,11 @@ public class OrdersAddServiceImpl implements OrdersAddService {
                     orderDetailProduct.getId(),
                     quantity,
                     orderDetailProduct.getName(),
-                    orderDetailProduct.getPrice(),
+                    orderDetailProduct.getPrice(), // 价格
                     orderDetailProduct.getImage(),
                     null,
                     null
-                    );
+            );
             orderDetailMapper.insert(orderDetail);
         }
         return Result.success("下单成功！");
