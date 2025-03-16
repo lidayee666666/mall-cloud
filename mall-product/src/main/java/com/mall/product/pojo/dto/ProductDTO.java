@@ -1,8 +1,12 @@
 package com.mall.product.pojo.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Data
 @ApiModel(description = "商品实体")
@@ -15,6 +19,16 @@ public class ProductDTO {
     private String name;
     @ApiModelProperty("价格（分）")
     private Integer price;
+
+    /**
+     * 前端展示价格（元）
+     */
+    @ApiModelProperty("价格（元）")
+    @JsonInclude
+    public BigDecimal getPriceYuan() {
+        return BigDecimal.valueOf(price)
+                .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
+    }
     @ApiModelProperty("库存数量")
     private Integer stock;
     @ApiModelProperty("商品图片")

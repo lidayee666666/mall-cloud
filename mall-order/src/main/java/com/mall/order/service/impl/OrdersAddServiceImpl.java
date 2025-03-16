@@ -32,7 +32,7 @@ public class OrdersAddServiceImpl implements OrdersAddService {
             return Result.error("订单为空");
         }
         Map<Long, Integer> items = ordersDTO.getItems();
-        BigDecimal totalFee = BigDecimal.ZERO; // 使用 BigDecimal 计算总价
+        int totalFee = 0; // 使用分单位计算
         Map<OrderDetailProduct, Integer> orderDetailProducts = new HashMap<>();
         for (Map.Entry<Long, Integer> entry : items.entrySet()) {
             Long productId = entry.getKey();
@@ -46,39 +46,53 @@ public class OrdersAddServiceImpl implements OrdersAddService {
             if (quantity > orderDetailProduct.getStock()) {
                 return Result.error("库存不足");
             }
-            orderDetailProducts.put(orderDetailProduct, quantity);
+            /*orderDetailProducts.put(orderDetailProduct, quantity);
             // 使用 BigDecimal 计算总价
-            totalFee = totalFee.add(orderDetailProduct.getPrice().multiply(BigDecimal.valueOf(quantity)));
+            totalFee = totalFee.add(orderDetailProduct.getPrice().multiply(BigDecimal.valueOf(quantity)));*/
+            // 确保product.getPrice()返回的是分单位
+            totalFee += orderDetailProduct.getPrice() * quantity;
+            orderDetailProducts.put(orderDetailProduct, quantity);
         }
 
-        Orders orders = new Orders(null,
-                totalFee, // 总价
-                ordersDTO.getPaymentType(),
-                UserContext.getUser(),
-                1,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
+        Orders orders = new Orders();
+        orders.setTotalFee(totalFee);
+        orders.setPaymentType(ordersDTO.getPaymentType());
+        orders.setUserId(UserContext.getUser());
+        orders.setStatus(1);
+//        Orders orders = new Orders(null,
+//                totalFee, // 总价
+//                ordersDTO.getPaymentType(),
+//                UserContext.getUser(),
+//                1,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null
+//        );
         ordersMapper.insert(orders);
         System.out.println(orders.getId());
 
         for (Map.Entry<OrderDetailProduct, Integer> entry : orderDetailProducts.entrySet()) {
-            OrderDetailProduct orderDetailProduct = entry.getKey();
+            OrderDetailProduct product = entry.getKey();
+
+            OrderDetail detail = new OrderDetail();
+            detail.setPrice(product.getPrice()); // 存储分单位
             Integer quantity = entry.getValue();
+
             OrderDetail orderDetail = new OrderDetail(null,
                     orders.getId(),
-                    orderDetailProduct.getId(),
+                    UserContext.getUser(),
+                    product.getId(),
                     quantity,
-                    orderDetailProduct.getName(),
-                    orderDetailProduct.getPrice(), // 价格
-                    orderDetailProduct.getImage(),
+                    product.getName(),
+                    product.getPrice(), // 价格
+                    product.getImage(),
                     null,
                     null
+
             );
             orderDetailMapper.insert(orderDetail);
         }

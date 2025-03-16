@@ -24,6 +24,7 @@ public class UserController {
     public Result<User> getById(@PathVariable Long id) {
         log.info("根据id查询用户信息：{}", id);
         User user = userService.getById(id);
+        user.setBalance(user.getBalance()/100);
         return Result.success(user);
     }
 }

@@ -1,14 +1,18 @@
 package com.mall.product.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 
 @Data
@@ -40,6 +44,16 @@ public class Product implements Serializable {
      * 价格（分）
      */
     private Integer price;
+
+    /**
+     * 前端展示价格（元）
+     */
+    //@TableField(exist = false)
+    @JsonInclude
+    public BigDecimal getPriceYuan() {
+        return BigDecimal.valueOf(price)
+                .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
+    }
 
     /**
      * 库存数量
