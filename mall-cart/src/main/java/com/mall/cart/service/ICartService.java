@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mall.cart.model.dto.CartAddDTO;
 import com.mall.cart.model.dto.CartUpdateDTO;
 import com.mall.cart.model.po.Cart;
+import com.mall.cart.model.vo.CartVO;
 import com.mall.common.result.Result;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * 功能描述:
  */
 public interface ICartService {
-    Result<List<Cart>> getCartList();
+    Result<List<CartVO>> getCartList();
 
     Result<String> updateCartItem(CartUpdateDTO updateDTO);
 
