@@ -25,5 +25,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+
+        <!-- mall-api -->
+        <dependency>
+            <groupId>com.mall</groupId>
+            <artifactId>mall-api</artifactId>
+        </dependency>
     </dependencies>
 </project>
