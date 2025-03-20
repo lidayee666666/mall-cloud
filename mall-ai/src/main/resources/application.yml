@@ -11,7 +11,7 @@ spring:
 
 deepseek:
   api:
-    key: sk-e7584461bb5645bfa03e8fd2d9455851
+    key: sk-acb3b1ed8179427cb37105e225f216e9
     url: https://api.deepseek.com/v1/chat/completions
     timeout: 60000
     retry: 3
