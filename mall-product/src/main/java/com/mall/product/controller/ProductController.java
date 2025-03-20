@@ -104,6 +104,7 @@ public class ProductController {
         Page<Product> result = productService.page(query.toMpPage("update_time", false));
         // 2.封装并返回
         PageDTO<ProductDTO> pageDTO = PageDTO.of(result, ProductDTO.class);
+        pageDTO.getList().forEach(dto -> dto.getPriceYuan());
         return Result.success(pageDTO);
     }
 
