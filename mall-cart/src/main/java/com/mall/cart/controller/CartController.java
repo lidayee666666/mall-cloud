@@ -4,6 +4,7 @@ package com.mall.cart.controller;
 import com.mall.cart.model.dto.CartAddDTO;
 import com.mall.cart.model.dto.CartUpdateDTO;
 import com.mall.cart.model.po.Cart;
+import com.mall.cart.model.vo.CartVO;
 import com.mall.cart.service.Impl.CartService;
 import com.mall.common.result.Result;
 import io.swagger.annotations.Api;
@@ -37,7 +38,7 @@ public class CartController {
 
     @ApiOperation("获取购物车列表")
     @GetMapping("/list")
-    public Result<List<Cart>> getCartList() {
+    public Result<List<CartVO>> getCartList() {
         logger.info("获取购物车列表");
         return cartService.getCartList();
     }

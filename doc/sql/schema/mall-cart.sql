@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `cart` (
                                       `product_id` bigint NOT NULL COMMENT '商品id',
                                       `num` int NOT NULL DEFAULT '1' COMMENT '购买数量',
                                       `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品名称',
-    `price` DECIMAL(10,2) NOT NULL COMMENT '价格,单位/元',
+    `price`  INT NOT NULL COMMENT '价格,单位/分',
     `image` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '商品图片',
     `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

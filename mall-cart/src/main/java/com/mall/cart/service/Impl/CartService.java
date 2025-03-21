@@ -7,6 +7,7 @@ import com.mall.cart.mapper.CartMapper;
 import com.mall.cart.model.dto.CartAddDTO;
 import com.mall.cart.model.dto.CartUpdateDTO;
 import com.mall.cart.model.po.Cart;
+import com.mall.cart.model.vo.CartVO;
 import com.mall.cart.service.ICartService;
 import com.mall.common.result.Result;
 import com.mall.common.utils.UserContext;
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 public class CartService implements ICartService {
@@ -32,14 +34,21 @@ public class CartService implements ICartService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    @Override
-    public Result<List<Cart>> getCartList() {
-        Long id = UserContext.getUser();
+    // 修改获取购物车列表方法
+    public Result<List<CartVO>> getCartList() {
+        Long userId = UserContext.getUser();
         QueryWrapper<Cart> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id", id);
-        List<Cart> cartList = cartMapper.selectList(queryWrapper);
-        return Result.success(cartList);
+        queryWrapper.eq("user_id", userId);
+        List<Cart> carts = cartMapper.selectList(queryWrapper);
+
+        // 转换为VO对象
+        List<CartVO> voList = carts.stream()
+                .map(CartVO::fromEntity)
+                .collect(Collectors.toList());
+
+        return Result.success(voList);
     }
+
 
     @Override
     @Transactional
@@ -172,7 +181,7 @@ public class CartService implements ICartService {
             cartItem.setNum(addDTO.getNum());
             cartItem.setName(product.getName());
             // 直接使用 product.getPrice()，无需转换
-            cartItem.setPrice(product.getPrice());
+            cartItem.setPrice(product.getPrice()); // 直接存储分
             cartItem.setImage(product.getImage());
             cartItem.setAttributes(addDTO.getAttributes()); // 设置商品属性
             cartItem.setCreateTime(LocalDateTime.now());
