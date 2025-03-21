@@ -12,6 +12,6 @@ public class JwtProperties {
     private Resource location;
     private String password;
     private String alias;
-    private Duration tokenTTL = Duration.ofMinutes(10);
+    private Duration tokenTTL = Duration.ofDays(10);
 }
 
