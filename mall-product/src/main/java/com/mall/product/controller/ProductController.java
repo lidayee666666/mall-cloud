@@ -1,5 +1,6 @@
 package com.mall.product.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.domain.PageDTO;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products/api")
@@ -28,29 +30,27 @@ public class ProductController {
     private ProductService productService;
 
 
-    /**
-     * 获取所有商品列表
-     * @return
-     */
-    @GetMapping("/select")
-    @ApiOperation("获取所有商品")
-    public Result<List<Product>> list() {
-        log.info("获取所有商品");
-        List<Product> list = productService.list();
-        return Result.success(list);
-    }
-
-    /**
-     * 根据id查询商品
-     * @param id
-     * @return
-     */
     @GetMapping("/select/{id}")
     @ApiOperation("根据id查询商品")
-    public Result<Product> getById(@PathVariable Long id) {
-        log.info("根据id查询商品:{}", id);
+    public Result<ProductDTO> getById(@PathVariable Long id) {
         Product product = productService.getById(id);
-        return Result.success(product);
+        return Result.success(convertToDTO(product));
+    }
+
+    @GetMapping("/select")
+    @ApiOperation("获取所有商品")
+    public Result<List<ProductDTO>> list() {
+        List<Product> products = productService.list();
+        List<ProductDTO> dtos = products.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+        return Result.success(dtos);
+    }
+
+    private ProductDTO convertToDTO(Product product) {
+        ProductDTO dto = new ProductDTO();
+        BeanUtil.copyProperties(product, dto);
+        return dto;
     }
 
     /**
@@ -104,6 +104,7 @@ public class ProductController {
         Page<Product> result = productService.page(query.toMpPage("update_time", false));
         // 2.封装并返回
         PageDTO<ProductDTO> pageDTO = PageDTO.of(result, ProductDTO.class);
+        pageDTO.getList().forEach(dto -> dto.getPriceYuan());
         return Result.success(pageDTO);
     }
 

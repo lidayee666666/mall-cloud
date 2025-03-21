@@ -4,12 +4,14 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -54,11 +56,19 @@ public class Cart {
     private String name;
 
     /**
-     * 价格,单位/元
+     * 价格,单位/分
      */
     @TableField("price")
-    @JsonSerialize(using = ToStringSerializer.class) // 将 BigDecimal 序列化为字符串
-    private BigDecimal price;
+    private Integer price; // 改为整型存储分
+
+    /**
+     * 前端展示价格（元）
+     */
+    @JsonInclude // 确保该字段被序列化
+    public BigDecimal getPriceYuan() {
+        return BigDecimal.valueOf(price)
+                .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
+    }
 
     /**
      * 商品图片

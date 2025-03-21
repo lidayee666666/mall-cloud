@@ -17,12 +17,25 @@ public class OrderDetailProductController {
     @GetMapping("/products/order/api/{id}")
     public Result<OrderDetailProduct> getById(@PathVariable Long id) {
         Product product = productService.getById(id);
-        String name = product.getName();
-        Integer price = product.getPrice();
-        Integer stock = product.getStock();
-        String image = product.getImage();
-        Integer status = product.getStatus();
-        OrderDetailProduct orderDetailProduct = new OrderDetailProduct(id, name, price, stock, image, status);
-        return Result.success(orderDetailProduct);
+        OrderDetailProduct dto = new OrderDetailProduct(
+                product.getId(),
+                product.getName(),
+                product.getPrice(), // 这里现在传递Integer类型
+                product.getStock(),
+                product.getImage(),
+                product.getStatus()
+        );
+        return Result.success(dto);
     }
+
+    /*private OrderDetailProduct convertToOrderDetailProduct(Product product) {
+        return new OrderDetailProduct(
+                product.getId(),
+                product.getName(),
+                product.getPriceYuan(),
+                product.getStock(),
+                product.getImage(),
+                product.getStatus()
+        );
+    }*/
 }
