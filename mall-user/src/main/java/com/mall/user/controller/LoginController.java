@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+@RequestMapping(path = "/users/api")
 @RestController
 @Slf4j
 public class LoginController {
@@ -28,7 +30,7 @@ public class LoginController {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    @PostMapping("/users/api/login")
+    @PostMapping("/login")
     public Result<Map<String, String>> login(@RequestBody Map<String, String> map) {
         String username = map.get("username");
         String password = map.get("password");
@@ -39,7 +41,7 @@ public class LoginController {
         return Result.success(login);
     }
 
-    @PostMapping("/users/api/login/staff")
+    @PostMapping("/login/staff")
     public Result<Map<String, String>> staffLogin(@RequestBody Map<String, String> map) {
         log.info("员工账号登录：{}", map);
         String username = map.get("username");
