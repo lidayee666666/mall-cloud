@@ -54,6 +54,7 @@ public class LoginServiceImpl implements LoginService {
 
         // 4.校验是否禁用
         if (user.getStatus() == 0) {
+            System.out.println("1321561");
             map.put("error_message", "用户被冻结");
 //            return map;
             return map;
