@@ -22,12 +22,12 @@ import java.util.stream.Collectors;
 
 @Api(tags = "订单服务接口")
 @RestController
-@RequestMapping(path = "/orders")
+@RequestMapping(path = "/orders/api")
 public class OrderController {
     @Autowired
     private OrdersAddService ordersAddService;
     @ApiOperation("添加订单")
-    @PostMapping("/api/add")
+    @PostMapping("/add")
     public Result<String> addOrders(@RequestBody OrdersDTO ordersDTO) {
         return ordersAddService.addOrders(ordersDTO);
     }
@@ -36,7 +36,7 @@ public class OrderController {
     private OrderInfoService orderInfoService;
 
     @ApiOperation("根据用户Id获取其订单")
-    @PostMapping("/api/infoByUserId")
+    @PostMapping("/infoByUserId")
     public Result<List<OrdersVO>> getOrderInfoByUserId() {
             return Result.success(orderInfoService.getOrderInfoByUserId());
     }
@@ -44,7 +44,7 @@ public class OrderController {
     @Autowired
     private OrderDetailInfoService orderDetailInfoService;
     @ApiOperation("根据订单Id获取订单详情")
-    @PostMapping("/api/infoByOrderId")
+    @PostMapping("/infoByOrderId")
     public Result<List<OrderDetailVO>> getOrderDetailInfoByOrderId(@RequestBody Long orderId) {
         Result<List<OrderDetail>> result = orderDetailInfoService.getOrderDetailInfoByOrderId(orderId);
         List<OrderDetailVO> voList = result.getData().stream()
@@ -56,7 +56,7 @@ public class OrderController {
     @Autowired
     private OrdersPaidService ordersPaidService;
     @ApiOperation("支付结束后更改订单状态和支付时间")
-    @PostMapping("/api/paymentUpdate")
+    @PostMapping("/paymentUpdate")
     public Result<String> updateOrdersPaid(@RequestBody Long orderId) {
         return ordersPaidService.updateOrdersPaid(orderId);
     }
@@ -64,7 +64,7 @@ public class OrderController {
     @Autowired
     private OrdersConsignService ordersConsignService;
     @ApiOperation("发货后更改订单状态和发货时间")
-    @PostMapping("/api/consignUpdate")
+    @PostMapping("/consignUpdate")
     public Result<String> consign(@RequestBody  Long orderId) {
         return ordersConsignService.consign(orderId);
     }
