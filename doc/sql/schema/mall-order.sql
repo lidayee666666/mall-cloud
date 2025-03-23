@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `order-detail` (
     `image` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '商品图片',
     `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `user_id` bigint not null comment '用户id',
     PRIMARY KEY (`id`) USING BTREE,
     KEY `key_order_id` (`order_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='订单详情表';
