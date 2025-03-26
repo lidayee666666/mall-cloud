@@ -27,3 +27,10 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - ${mall.swagger.package}
+logging:
+  level:
+    com.mall: debug
+    org.elasticsearch.client: DEBUG      # 启用 Elasticsearch 客户端的调试日志
+    org.springframework.data.elasticsearch: DEBUG  # 启用 Spring Data Elasticsearch 的调试日志
+  pattern:
+    dateformat: MM-dd HH:mm:ss:SSS
