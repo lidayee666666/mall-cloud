@@ -1,5 +1,6 @@
 package com.mall.api.client;
 
+import com.mall.api.domain.entity.SimpleStore;
 import com.mall.api.domain.entity.Staff;
 import com.mall.common.result.Result;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -14,4 +15,7 @@ public interface StoreClient {
 
     @GetMapping("/staff/api/user/{id}")
     Result<Staff> getByUserId(@PathVariable("id") Long id);
+
+    @GetMapping("/store/api/{id}")
+    Result<SimpleStore> getStoreNameById(@PathVariable("id") Long id);
 }

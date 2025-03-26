@@ -1,15 +1,15 @@
 package com.mall.product.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.domain.PageDTO;
 import com.mall.common.domain.PageQuery;
 import com.mall.common.result.Result;
 import com.mall.product.pojo.dto.ProductDTO;
-import com.mall.product.pojo.entity.Category;
+import com.mall.product.pojo.dto.QueryProductParams;
 import com.mall.product.pojo.entity.Product;
-import com.mall.product.service.CategoryService;
+import com.mall.product.pojo.vo.PageVO;
+import com.mall.product.pojo.vo.ProductVO;
 import com.mall.product.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,28 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @ApiOperation("选择查询")
+    @PostMapping("/select/query")
+    public Result<PageVO<ProductVO>> getProducts(@RequestBody QueryProductParams query) {
+        try {
+            PageVO<ProductVO> res = productService.getProducts(query);
+            return Result.success(res);
+        } catch (IOException e) {
+            return Result.error("ES查询失败");
+        }
+    }
+
+    @ApiOperation("查询推荐")
+    @PostMapping("/select/recommends")
+    public Result<List<String>> getRecommends(@RequestBody QueryProductParams query) {
+        try {
+            List<String> res = productService.getRecommends(query);
+            return Result.success(res);
+        } catch (IOException e) {
+            return Result.error("查询建议获取失败");
+        }
+    }
 
 
     @GetMapping("/select/{id}")
@@ -55,6 +78,7 @@ public class ProductController {
 
     /**
      * 新增商品
+     *
      * @param productDTO
      * @return
      */
@@ -68,6 +92,7 @@ public class ProductController {
 
     /**
      * 删除商品
+     *
      * @param id
      * @return
      */
@@ -81,6 +106,7 @@ public class ProductController {
 
     /**
      * 更新商品信息
+     *
      * @param productDTO
      * @return
      */
@@ -94,6 +120,7 @@ public class ProductController {
 
     /**
      * 分页查询商品
+     *
      * @param query
      * @return
      */
@@ -110,6 +137,7 @@ public class ProductController {
 
     /**
      * 按照类型分页查询商品
+     *
      * @param query
      * @param categoryId
      * @return
