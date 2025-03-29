@@ -72,6 +72,7 @@ public class CartController {
         logger.info("获取购物车商品数量");
         return cartService.count();
     }
+
     @ApiOperation("支付成功清除购物车")
     @PostMapping("/clear")
     public Result<CartClearVO> deleteCartItems(@RequestBody CartClearDTO clearDTO) {
