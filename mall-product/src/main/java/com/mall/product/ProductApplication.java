@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 //springboot程序的启动类
 @SpringBootApplication
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
         "com.mall.product"
 })
 @EnableFeignClients(basePackages = "com.mall.api.client", defaultConfiguration = DefaultFeignConfig.class)
+@EnableScheduling // 开启定时任务
 public class ProductApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProductApplication.class);

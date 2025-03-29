@@ -116,13 +116,6 @@
                 <version>${knife4j.version}</version>
             </dependency>
 
-            <!-- Elasticsearch -->
-            <dependency>
-                <groupId>org.elasticsearch.client</groupId>
-                <artifactId>elasticsearch-rest-high-level-client</artifactId>
-                <version>${elasticsearch.version}</version>
-            </dependency>
-
             <!-- 阿里云OSS -->
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
@@ -150,14 +143,14 @@
                 <artifactId>mall-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            
+
             <!-- mall-api -->
             <dependency>
                 <groupId>com.mall</groupId>
                 <artifactId>mall-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            
+
             <!-- spring-security-rsa -->
             <dependency>
                 <groupId>org.springframework.security</groupId>

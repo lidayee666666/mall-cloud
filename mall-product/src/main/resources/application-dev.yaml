@@ -1,7 +1,6 @@
 mall:
   db:
     host: 127.0.0.1
-    #host: 192.168.145.128
     database: mall-product
     user: root
     password: root
