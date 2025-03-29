@@ -200,7 +200,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
                 }
             }
 
-//            System.out.println(productDoc);
             list.add(productDoc);
         }
         List<ProductVO> productVOS = BeanUtil.copyToList(list, ProductVO.class);
