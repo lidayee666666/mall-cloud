@@ -13,7 +13,7 @@ import java.util.Map;
  */
 @Data
 public class CartVO {
-    private Long id;
+    private String id;
     private Long productId;
     private String name;
     private Integer num;
@@ -23,7 +23,7 @@ public class CartVO {
 
     public static CartVO fromEntity(Cart cart) {
         CartVO vo = new CartVO();
-        vo.setId(cart.getId());
+        vo.setId(String.valueOf(cart.getId()));
         vo.setProductId(cart.getProductId());
         vo.setName(cart.getName());
         vo.setNum(cart.getNum());
