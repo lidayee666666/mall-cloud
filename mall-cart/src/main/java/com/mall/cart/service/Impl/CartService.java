@@ -5,12 +5,15 @@ import com.mall.api.client.ProductClient;
 import com.mall.api.domain.entity.OrderDetailProduct;
 import com.mall.cart.mapper.CartMapper;
 import com.mall.cart.model.dto.CartAddDTO;
+import com.mall.cart.model.dto.CartClearDTO;
 import com.mall.cart.model.dto.CartUpdateDTO;
 import com.mall.cart.model.po.Cart;
+import com.mall.cart.model.vo.CartClearVO;
 import com.mall.cart.model.vo.CartVO;
 import com.mall.cart.service.ICartService;
 import com.mall.common.result.Result;
 import com.mall.common.utils.UserContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -22,7 +25,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 public class CartService implements ICartService {
     @Autowired
@@ -220,6 +223,31 @@ public class CartService implements ICartService {
         stringRedisTemplate.opsForValue().set(cacheKey, String.valueOf(count), 5, TimeUnit.MINUTES);
 
         return Result.success(count);
+    }
+
+    @Override
+    public Result<CartClearVO> deleteCartItems(List<String> cartItemIds) {
+        CartClearVO cartClearVO = new CartClearVO();
+        // 1. 获取当前用户ID
+        //List<String>cartIds=clearDTO.getCartItemIds();
+        Long userId = UserContext.getUser();
+        if (userId == null) {
+            return Result.error("用户未登录");
+        }
+
+        // 2. 删除购物车项
+        int deleteCount=cartMapper.deleteBatchIds(cartItemIds);
+
+        if (deleteCount == 0) {
+            return Result.error("购物车中不存在该商品");
+        }
+
+        // 3. 更新缓存
+        updateCartCountCache(userId);
+
+
+        cartClearVO.setStatus(1);
+        return Result.success(cartClearVO);
     }
 
     private void updateCartCountCache(Long userId) {
