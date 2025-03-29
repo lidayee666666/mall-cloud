@@ -2,8 +2,10 @@ package com.mall.cart.controller;
 
 
 import com.mall.cart.model.dto.CartAddDTO;
+import com.mall.cart.model.dto.CartClearDTO;
 import com.mall.cart.model.dto.CartUpdateDTO;
 import com.mall.cart.model.po.Cart;
+import com.mall.cart.model.vo.CartClearVO;
 import com.mall.cart.model.vo.CartVO;
 import com.mall.cart.service.Impl.CartService;
 import com.mall.common.result.Result;
@@ -70,4 +72,11 @@ public class CartController {
         logger.info("获取购物车商品数量");
         return cartService.count();
     }
+    @ApiOperation("支付成功清除购物车")
+    @PostMapping("/clear")
+    public Result<CartClearVO> deleteCartItems(@RequestBody CartClearDTO clearDTO) {
+        logger.info("清除购物车: {}",clearDTO.getCartItemIds());
+        return cartService.deleteCartItems(clearDTO.getCartItemIds());
+    }
+
 }

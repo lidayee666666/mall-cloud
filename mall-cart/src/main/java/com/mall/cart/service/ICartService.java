@@ -2,8 +2,10 @@ package com.mall.cart.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mall.cart.model.dto.CartAddDTO;
+import com.mall.cart.model.dto.CartClearDTO;
 import com.mall.cart.model.dto.CartUpdateDTO;
 import com.mall.cart.model.po.Cart;
+import com.mall.cart.model.vo.CartClearVO;
 import com.mall.cart.model.vo.CartVO;
 import com.mall.common.result.Result;
 
@@ -24,4 +26,6 @@ public interface ICartService {
     Result<String> addToCart(CartAddDTO addDTO);
 
     Result<Integer> count();
+
+    Result<CartClearVO> deleteCartItems(List<String>cartItemIds);
 }
