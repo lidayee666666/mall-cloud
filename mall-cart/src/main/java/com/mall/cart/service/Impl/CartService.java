@@ -5,7 +5,6 @@ import com.mall.api.client.ProductClient;
 import com.mall.api.domain.entity.OrderDetailProduct;
 import com.mall.cart.mapper.CartMapper;
 import com.mall.cart.model.dto.CartAddDTO;
-import com.mall.cart.model.dto.CartClearDTO;
 import com.mall.cart.model.dto.CartUpdateDTO;
 import com.mall.cart.model.po.Cart;
 import com.mall.cart.model.vo.CartClearVO;
