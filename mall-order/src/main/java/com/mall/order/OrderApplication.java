@@ -8,11 +8,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 //扫描
-//@MapperScan("com.mall.order.mapper")
-//@ComponentScan({
-//        "com.mall.common"
-//})
 @SpringBootApplication
+@MapperScan("com.mall.order.mapper")
+@ComponentScan({
+        "com.mall.common",
+        "com.mall.order"
+})
 @EnableFeignClients(basePackages = "com.mall.api.client", defaultConfiguration = DefaultFeignConfig.class)
 public class OrderApplication {
     public static void main(String[] args) {
