@@ -1,7 +1,6 @@
 package com.mall.order.pojo.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,10 +10,11 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(description = "订单DTO")
+@Schema(name = "OrdersDTO", description = "订单DTO")
 public class OrdersDTO {
-    @ApiModelProperty("key：商品id，value：商品购买数量")
+    @Schema(description = "key：商品id，value：商品购买数量")
     private Map<Long, Integer> items;
-    @ApiModelProperty("支付类型")
+
+    @Schema(description = "支付类型")
     private Integer paymentType;
 }

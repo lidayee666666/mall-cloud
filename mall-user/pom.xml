@@ -64,7 +64,7 @@
 
         <!-- mall-api -->
         <dependency>
-            <groupId>com.mall</groupId>
+            <groupId>com.lql.mall</groupId>
             <artifactId>mall-api</artifactId>
         </dependency>
 
