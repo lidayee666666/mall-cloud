@@ -14,24 +14,40 @@
     <description>商品服务</description>
 
     <dependencies>
-        <!--FastJson-->
+        <!-- Nacos Discovery 依赖 -->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.71</version>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
-        <!-- ES -->
+        <!-- 使用FastJSON2替代FastJSON -->
         <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>7.6.1</version>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
         </dependency>
 
+        <!-- 替换为以下Elasticsearch依赖 -->
+        <!-- 添加Elasticsearch依赖 -->
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>7.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <!-- 文档生成 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
         </dependency>
 
         <!-- 公共模块 -->
@@ -40,23 +56,17 @@
             <artifactId>mall-common</artifactId>
         </dependency>
 
-        <!-- Nacos Config -->
+        <!-- 配置中心 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
-        <!-- load balance-->
+        <!-- 负载均衡 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
-
-        <!-- Elasticsearch -->
-<!--        <dependency>-->
-<!--            <groupId>org.elasticsearch.client</groupId>-->
-<!--            <artifactId>elasticsearch-rest-high-level-client</artifactId>-->
-<!--        </dependency>-->
 
         <!-- 阿里云OSS -->
         <dependency>
@@ -64,17 +74,18 @@
             <artifactId>aliyun-sdk-oss</artifactId>
         </dependency>
 
-        <!-- bootstrap-->
+        <!-- 启动配置 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
-        <!-- mall-api -->
+        <!-- API模块 -->
         <dependency>
-            <groupId>com.mall</groupId>
+            <groupId>com.lql.mall</groupId>
             <artifactId>mall-api</artifactId>
         </dependency>
+
 
     </dependencies>
 </project>

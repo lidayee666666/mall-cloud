@@ -14,6 +14,12 @@
     <description>订单服务</description>
 
     <dependencies>
+        <!-- Nacos Discovery 依赖 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
         <!-- 公共模块 -->
         <dependency>
             <groupId>com.lql.mall</groupId>
@@ -22,8 +28,20 @@
 
         <!-- mall-api -->
         <dependency>
-            <groupId>com.mall</groupId>
+            <groupId>com.lql.mall</groupId>
             <artifactId>mall-api</artifactId>
+        </dependency>
+
+        <!-- 修改后 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- Nacos Discovery 依赖 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
     </dependencies>
 </project>

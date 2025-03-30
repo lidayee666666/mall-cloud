@@ -12,42 +12,80 @@
     <name>douyin-mall-cloud</name>
     <description>抖音商城微服务项目</description>
 
-    <!-- 统一管理项目版本 -->
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.6.6</spring-boot.version>
-        <spring-cloud.version>2021.0.5</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <mysql.version>8.0.16</mysql.version>
-        <druid.version>1.1.10</druid.version>
-        <hutool.version>5.8.11</hutool.version>
-        <jwt.version>3.8.2</jwt.version>
-        <knife4j.version>4.4.0</knife4j.version>
-        <elasticsearch.version>7.6.1</elasticsearch.version>
-        <aliyun.oss.version>3.15.1</aliyun.oss.version>
-        <commons.fileupload.version>1.3.3</commons.fileupload.version>
+
+        <!-- Spring 全家桶版本 -->
+        <spring-boot.version>3.1.5</spring-boot.version>
+        <spring-cloud.version>2022.0.4</spring-cloud.version>
+        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version> <!-- 修改为RC2版本 -->
+
+        <!-- 中间件及工具 -->
+        <fastjson.version>2.0.47</fastjson.version>
+        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
+        <mysql.version>8.0.33</mysql.version>
+        <druid.version>1.2.18</druid.version>
+        <hutool.version>5.8.22</hutool.version>
+        <jwt.version>4.4.0</jwt.version>
+        <knife4j.version>4.5.0</knife4j.version>
+        <!-- 其他属性保持不变 -->
+        <elasticsearch-rest-client.version>7.17.13</elasticsearch-rest-client.version>
+        <elasticsearch-java.version>7.17.13</elasticsearch-java.version>
+        <elasticsearch.version>7.17.13</elasticsearch.version>
+        <jackson.version>2.15.3</jackson.version>
+        <aliyun.oss.version>3.17.3</aliyun.oss.version>
+        <commons.fileupload.version>1.5</commons.fileupload.version>
         <easy.captcha.version>1.6.2</easy.captcha.version>
+        <swagger-annotations.version>2.2.15</swagger-annotations.version>
+        <swagger.version>2.2.15</swagger.version>
         <dashscope.version>2.16.8</dashscope.version>
         <lombok.version>1.18.30</lombok.version>
         <guava.version>32.1.3-jre</guava.version>
+        <spring-security-rsa.version>1.1.1</spring-security-rsa.version>
+        <mall-api.version>${project.version}</mall-api.version>
+
+        <!-- Validation -->
+        <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
+        <jakarta-validation-api.version>3.0.2</jakarta-validation-api.version>
+
+        <!-- Nacos客户端版本控制 -->
+        <nacos-client.version>2.2.3</nacos-client.version> <!-- 明确指定Nacos客户端版本 -->
     </properties>
 
-    <!-- 依赖管理 -->
     <dependencyManagement>
         <dependencies>
-            <!-- 布隆过滤器 -->
+            <!-- Validation -->
             <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>${jakarta-validation-api.version}</version>
             </dependency>
 
-            <!-- Spring Boot -->
+            <!-- 统一Jackson版本 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <!-- Spring 基础依赖 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -56,7 +94,6 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- Spring Cloud -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -65,133 +102,182 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- Spring Cloud Alibaba -->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.alibaba.nacos</groupId>
+                        <artifactId>nacos-client</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
-            <!-- MyBatis Plus -->
+            <!-- 显式指定Nacos客户端版本 -->
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos-client.version}</version>
+            </dependency>
+
+            <!-- 基础工具 -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <!-- 数据相关 -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
 
-            <!-- MySQL -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
 
-            <!-- Druid -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
             </dependency>
 
-            <!-- hutool -->
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-
-            <!-- JWT -->
+            <!-- 安全认证 -->
             <dependency>
                 <groupId>com.auth0</groupId>
                 <artifactId>java-jwt</artifactId>
                 <version>${jwt.version}</version>
             </dependency>
 
-            <!-- Knife4j API文档 -->
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-rsa</artifactId>
+                <version>${spring-security-rsa.version}</version>
+            </dependency>
+
+            <!-- 开发工具 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <!-- 文档生成 -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
 
-            <!-- 阿里云OSS -->
+            <!-- 存储服务 -->
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>
                 <version>${aliyun.oss.version}</version>
             </dependency>
 
-            <!-- 文件上传 -->
+            <!-- FastJSON -->
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!-- Elasticsearch 相关 -->
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client</artifactId>
+                <version>${elasticsearch-rest-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>co.elastic.clients</groupId>
+                <artifactId>elasticsearch-java</artifactId>
+                <version>${elasticsearch-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+
+            <!-- 其他工具 -->
             <dependency>
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons.fileupload.version}</version>
             </dependency>
 
-            <!-- 验证码 -->
             <dependency>
                 <groupId>com.github.whvcse</groupId>
                 <artifactId>easy-captcha</artifactId>
                 <version>${easy.captcha.version}</version>
             </dependency>
 
-            <!-- mall-common -->
-            <dependency>
-                <groupId>com.lql.mall</groupId>
-                <artifactId>mall-common</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <!-- mall-api -->
-            <dependency>
-                <groupId>com.mall</groupId>
-                <artifactId>mall-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <!-- spring-security-rsa -->
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-rsa</artifactId>
-                <version>1.0.9.RELEASE</version>
-            </dependency>
-
-            <!-- 通义千问SDK -->
+            <!-- AI服务 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>dashscope-sdk-java</artifactId>
                 <version>${dashscope.version}</version>
             </dependency>
 
-            <!-- lombok -->
+            <!-- 项目模块 -->
             <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
+                <groupId>com.lql.mall</groupId>
+                <artifactId>mall-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.lql.mall</groupId>
+                <artifactId>mall-api</artifactId>
+                <version>${mall-api.version}</version>
+            </dependency>
+
+            <!-- Redis -->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>3.1.5</version>
+            </dependency>
+
+            <!-- SpringDoc OpenAPI -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>2.3.0</version>
+            </dependency>
+
+            <!-- Swagger注解支持 -->
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
-    <!-- 公共依赖 -->
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
-        <!-- Nacos Discovery -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
     </dependencies>
 
-    <!-- 模块管理 -->
     <modules>
-        <!-- 后续添加子模块时在这里声明 -->
         <module>mall-common</module>
         <module>mall-gateway</module>
         <module>mall-user</module>
@@ -204,28 +290,26 @@
         <module>mall-api</module>
     </modules>
 
-    <!-- 构建配置 -->
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.11.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
+                    <parameters>true</parameters>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
-    <!-- 仓库配置 -->
     <repositories>
         <repository>
-            <id>aliyun</id>
-            <name>aliyun Repository</name>
-            <url>https://maven.aliyun.com/repository/public</url>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -233,18 +317,24 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>aliyun-plugin</id>
+        <repository>
+            <id>aliyun</id>
             <url>https://maven.aliyun.com/repository/public</url>
             <releases>
                 <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
             </releases>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
