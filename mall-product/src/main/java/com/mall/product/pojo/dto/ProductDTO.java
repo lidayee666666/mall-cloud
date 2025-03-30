@@ -2,46 +2,53 @@ package com.mall.product.pojo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Data
-@ApiModel(description = "商品数据传输对象")
+@Schema(name = "ProductDTO", description = "商品数据传输对象")
 public class ProductDTO {
-    @ApiModelProperty("商品id")
+    @Schema(description = "商品id", example = "1")
     private Long id;
-    @ApiModelProperty("所属商家id")
+
+    @Schema(description = "所属商家id", example = "1001")
     private Long storeId;
-    @ApiModelProperty("商品名称")
+
+    @Schema(description = "商品名称", example = "高端智能手机")
     private String name;
-    @ApiModelProperty("价格（分）")
+
+    @Schema(description = "价格（分）", hidden = true)
     @JsonIgnore
     private Integer price;
 
-    @ApiModelProperty("价格（元）")
-    @JsonInclude(JsonInclude.Include.ALWAYS) // 确保始终包含该字段
+    @Schema(description = "价格（元）", example = "5999.00", requiredMode = Schema.RequiredMode.REQUIRED)
+    @JsonInclude(JsonInclude.Include.ALWAYS)
     public BigDecimal getPriceYuan() {
         if (price == null) {
-            return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP); // 处理null，返回0.00元
+            return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
         }
         return BigDecimal.valueOf(price)
                 .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
     }
 
-    @ApiModelProperty("库存数量")
+    @Schema(description = "库存数量", example = "100")
     private Integer stock;
-    @ApiModelProperty("商品图片")
+
+    @Schema(description = "商品图片URL", example = "https://example.com/image.jpg")
     private String image;
-    @ApiModelProperty("类目名称")
+
+    @Schema(description = "类目名称", example = "电子产品")
     private String category;
-    @ApiModelProperty("销量")
+
+    @Schema(description = "销量", example = "500")
     private Integer sold;
-    @ApiModelProperty("评论数")
+
+    @Schema(description = "评论数", example = "120")
     private Integer commentCount;
-    @ApiModelProperty("商品状态 1-正常，2-下架，3-删除")
+
+    @Schema(description = "商品状态: 1-正常, 2-下架, 3-删除", example = "1")
     private Integer status;
 }
