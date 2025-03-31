@@ -39,12 +39,6 @@
             <!-- 版本号会继承父pom的7.6.1 -->
         </dependency>
 
-        <!-- 添加transport依赖（7.6.1需要） -->
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-client</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
