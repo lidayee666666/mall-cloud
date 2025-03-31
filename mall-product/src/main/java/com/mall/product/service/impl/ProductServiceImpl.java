@@ -133,6 +133,12 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             boolQuery.must(QueryBuilders.matchAllQuery());
         }
 
+        // 设置分类查询
+        String category = params.getCategory();
+        if (category != null && !category.isEmpty()) {
+            boolQuery.must(QueryBuilders.termQuery("category",category));
+        }
+
         // 3. 构建高亮
         HighlightBuilder highlightBuilder = new HighlightBuilder()
                 .field(new HighlightBuilder.Field("name")
