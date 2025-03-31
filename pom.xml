@@ -32,7 +32,7 @@
         <knife4j.version>4.5.0</knife4j.version>
         <!-- 其他属性保持不变 -->
         <elasticsearch-rest-client.version>7.6.1</elasticsearch-rest-client.version>
-        <elasticsearch-java.version>7.6.1</elasticsearch-java.version>
+<!--        <elasticsearch-java.version>7.6.1</elasticsearch-java.version>-->
         <elasticsearch.version>7.6.1</elasticsearch.version>
         <jackson.version>2.15.3</jackson.version>
         <aliyun.oss.version>3.17.3</aliyun.oss.version>
@@ -202,11 +202,8 @@
                 <artifactId>elasticsearch-rest-client</artifactId>
                 <version>${elasticsearch-rest-client.version}</version>
             </dependency>
-            <dependency>
-                <groupId>co.elastic.clients</groupId>
-                <artifactId>elasticsearch-java</artifactId>
-                <version>${elasticsearch-java.version}</version>
-            </dependency>
+
+
             <dependency>
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>
