@@ -103,6 +103,12 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             sourceBuilder.query(QueryBuilders.matchAllQuery());
         }
 
+        // 设置分类查询
+        String category = params.getCategory();
+        if (category != null && !category.isEmpty()) {
+            sourceBuilder.query(QueryBuilders.termQuery("category", category));
+        }
+
         // 设置分页
         sourceBuilder.from(from);
         sourceBuilder.size(params.getPageSize());
