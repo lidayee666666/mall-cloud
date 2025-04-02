@@ -43,7 +43,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 //        System.out.println("需要过滤");
         // 3.获取请求头中的token
         String token = null;
-        List<String> headers = request.getHeaders().get("authorization");
+        List<String> headers = request.getHeaders().get("Authorization");
         System.out.println(headers);
         if (!CollUtils.isEmpty(headers)) {
             token = headers.get(0);
@@ -64,10 +64,12 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         System.out.println("userId = " + userId);
         System.out.println("token 有效");
         String userInfo = userId.toString();
+        // 修改转发逻辑，确保头信息传递
         ServerWebExchange ex = exchange.mutate()
-                .request(b -> b.header("user-info", userInfo))
+                .request(originalRequest -> originalRequest.build().mutate()
+                        .header("user-info", userInfo) // 添加新头
+                        .build())
                 .build();
-        // 6.放行
         return chain.filter(ex);
     }
 
