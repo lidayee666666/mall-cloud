@@ -11,6 +11,7 @@ import java.math.RoundingMode;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetailProduct {
+
     private Long id;
     private String name;
     private Integer price; // 改为Integer类型（分单位）

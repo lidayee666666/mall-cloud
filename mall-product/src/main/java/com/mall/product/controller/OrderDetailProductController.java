@@ -15,8 +15,14 @@ public class OrderDetailProductController {
     @Autowired
     private ProductService productService;
 
+    /**
+     * 根据商品id获取商品详情
+     * @param id
+     * @return
+     */
     @GetMapping("/products/order/api/{id}")
     public Result<OrderDetailProduct> getById(@PathVariable Long id) {
+
         Product product = productService.getById(id);
         OrderDetailProduct dto = new OrderDetailProduct(
                 product.getId(),
