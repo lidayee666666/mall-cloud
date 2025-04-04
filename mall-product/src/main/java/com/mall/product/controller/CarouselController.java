@@ -21,7 +21,7 @@ import java.util.List;
  */
 @RestController
 @Slf4j
-@RequestMapping("product/api")
+@RequestMapping("products/api/select")
 @Tag(name = "CarouselController",description = "商城首页轮播图界面")
 public class CarouselController {
 
