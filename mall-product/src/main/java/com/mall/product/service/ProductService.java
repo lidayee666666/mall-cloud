@@ -3,10 +3,12 @@ package com.mall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.domain.PageDTO;
 import com.mall.common.domain.PageQuery;
+import com.mall.common.result.Result;
 import com.mall.product.pojo.doc.ProductDoc;
 import com.mall.product.pojo.dto.ProductDTO;
 import com.mall.product.pojo.dto.QueryProductParams;
 import com.mall.product.pojo.entity.Product;
+import com.mall.product.pojo.vo.CarouselVO;
 import com.mall.product.pojo.vo.PageVO;
 import com.mall.product.pojo.vo.ProductVO;
 
@@ -28,4 +30,6 @@ public interface ProductService extends IService<Product> {
     PageVO<ProductVO> getProducts(QueryProductParams query) throws IOException;
 
     List<String> getRecommends(QueryProductParams query) throws IOException;
+
+
 }
