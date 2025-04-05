@@ -13,6 +13,8 @@ spring:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
       mail.smtp.ssl.enable: true
+  profiles:
+    include: oss
 
   #  profiles:
 #    active: dev
@@ -42,3 +44,11 @@ mybatis-plus:
     db-config:
       update-strategy: not_null
       id-type: auto
+
+
+aliyun:
+  oss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    accessKeyId: LTAI5tQJHscMF8WWqC5c9CGv
+    accessKeySecret: L9uE69DPH0XorRQ6uuSsfVuRPwstYU
+    bucketName: feifan-longye

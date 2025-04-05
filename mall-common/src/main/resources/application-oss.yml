@@ -1,0 +1,10 @@
+# yml格式的文件以空格缩进, 相同缩进表示同一级, 属性和值之间必须有空格
+
+# 连接数据库信息
+spring:
+  application:
+    name: mall-common
+  servlet:
+    multipart:
+      max-file-size: 50MB  # 单个文件的最大大小
+      max-request-size: 100MB  # 整个请求的最大大小
