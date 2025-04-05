@@ -32,14 +32,16 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/findUserById")
     @Operation(summary = "查询用户信息", description = "根据用户ID获取用户详细信息") // 替换 @ApiOperation
-    public Result<User> getById(@PathVariable Long id) {
+    public Result<User> getById() {
+        Long id = UserContext.getUser();
         log.info("根据id查询用户信息：{}", id);
         User user = userService.getById(id);
         user.setBalance(user.getBalance()/100);
         return Result.success(user);
     }
+
     @GetMapping("/findPasswordById")
     @Operation(summary = "查询用户信息", description = "根据用户ID获取用户密码") // 替换 @ApiOperation
     public Result<Integer>findPasswordById(@RequestHeader("Authorization") String token,

@@ -2,11 +2,9 @@ package com.mall.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.common.utils.UserContext;
-import com.mall.user.mapper.CommentMapper;
+
 import com.mall.user.mapper.UserMapper;
 import com.mall.api.domain.entity.User;
-import com.mall.user.pojo.Comment;
 import com.mall.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
