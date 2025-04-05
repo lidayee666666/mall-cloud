@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mall.product.mapper.CarouselMapper">
 
-    <select id="groupByCategoryOrder" resultType="com.mall.product.pojo.vo.CarouselVO">
+    <select id="groupByCategoryOrder" resultType="java.lang.String">
         SELECT image
         FROM (
                  SELECT

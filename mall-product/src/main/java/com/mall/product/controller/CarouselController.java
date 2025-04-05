@@ -1,9 +1,7 @@
 package com.mall.product.controller;
 
 import com.mall.common.result.Result;
-import com.mall.product.pojo.vo.CarouselVO;
 import com.mall.product.service.CarouselService;
-import com.mall.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +28,7 @@ public class CarouselController {
 
     @Operation(summary = "商城首页轮播图接口")
     @GetMapping(path = "/carousel")
-    public Result<List<CarouselVO>> carouselList(){
+    public Result<List<String>> carouselList(){
         return carouselServe.carouselServe();
     }
 }

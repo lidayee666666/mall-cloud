@@ -1,9 +1,7 @@
 package com.mall.product.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.mall.common.result.Result;
 import com.mall.product.pojo.entity.Product;
-import com.mall.product.pojo.vo.CarouselVO;
 
 import java.util.List;
 
@@ -14,5 +12,5 @@ import java.util.List;
  */
 public interface CarouselMapper extends BaseMapper<Product> {
 
-    List<CarouselVO> groupByCategoryOrder();
+    List<String> groupByCategoryOrder();
 }
