@@ -21,7 +21,7 @@ import java.util.Date;
  * 功能描述:
  */
 @Slf4j
-@RequestMapping("/users/image")
+@RequestMapping("/users/api")
 @RestController
 public class UploadController {
 
