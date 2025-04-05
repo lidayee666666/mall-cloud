@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `product` (
     `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商品名称',
     `price` int NOT NULL DEFAULT '0' COMMENT '价格（分）',
     `stock` int UNSIGNED NOT NULL COMMENT '库存数量',
-    `image` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '商品图片',
+    `image` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '商品图片',
     `category` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '类目名称',
     `sold` int DEFAULT '0' COMMENT '销量',
     `comment_count` int DEFAULT '0' COMMENT '评论数',
