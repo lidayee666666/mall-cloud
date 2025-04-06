@@ -3,6 +3,7 @@ package com.mall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.result.Result;
 import com.mall.product.pojo.entity.Product;
+import com.mall.product.pojo.vo.CarouselVO;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ import java.util.List;
  * 功能描述:
  */
 public interface CarouselService extends IService<Product> {
-    Result<List<String>> carouselServe();
+    Result<List<CarouselVO>> carouselServe();
 }
