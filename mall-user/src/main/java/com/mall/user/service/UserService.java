@@ -5,6 +5,7 @@ import com.mall.api.domain.entity.User;
 import com.mall.user.domain.vo.CommentVO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService extends IService<User> {
     String findPasswordById(Long id);
@@ -16,4 +17,6 @@ public interface UserService extends IService<User> {
     List<CommentVO> findComment(Long productId);
 
     List<CommentVO> findSecondComment(Long commentId);
+
+    Map<String, Object> pwdInfo();
 }
