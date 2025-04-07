@@ -1,19 +1,33 @@
 package com.mall.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import com.mall.api.client.ProductClient;
+import com.mall.common.utils.BeanUtils;
+import com.mall.user.domain.entity.Comment;
+import com.mall.user.domain.vo.CommentVO;
+import com.mall.user.mapper.CommentMapper;
 import com.mall.user.mapper.UserMapper;
 import com.mall.api.domain.entity.User;
 import com.mall.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
+
+    @Autowired
+    private ProductClient productClient;
 
 
 
@@ -42,6 +56,84 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 调用 MyBatis-Plus 的 update 方法进行更新
         boolean isUpdated = userMapper.update(updateUser, queryWrapper) > 0;
         return isUpdated;
+    }
+
+    @Override
+    public Integer saveComment(Long userId,Long productId, String content, Long parentId) {
+        //判断商品是否存在
+        boolean productExists = productClient.checkProductExists(productId);
+
+        if (!productExists) {
+            throw new RuntimeException("商品不存在");
+        }
+
+        // 创建 Comment 实体对象并设置属性
+        Comment comment = new Comment();
+        comment.setContent(content);
+        comment.setUserId(userId);
+        comment.setProductId(productId);
+        comment.setParentId(parentId);
+
+        Integer status=commentMapper.insert(comment);
+        if (parentId != null) {
+            // 构造更新条件
+            UpdateWrapper<Comment> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.eq("id", comment.getId()) // 更新条件：id 等于 commentId
+                    .setSql("reply_count = reply_count + 1"); // 动态更新 reply_count
+
+            // 执行更新操作
+            commentMapper.update(null, updateWrapper);
+        }
+        return status;
+    }
+
+
+    @Override
+    public List<CommentVO> findComment(Long productId) {
+        try {
+            // 查询所有一级评论（parent_id 为 null）
+            List<Comment> firstCommentList = commentMapper.selectList(
+                    new QueryWrapper<Comment>()
+                            .eq("product_id", productId)
+                            .isNull("parent_id") // 一级评论的 parent_id 为 null
+            );
+
+            // 转换为 CommentVO 列表
+            List<CommentVO> commentVOList = BeanUtils.copyToList(firstCommentList, CommentVO.class);
+
+            // 遍历 CommentVO 列表，补充用户信息
+            for (CommentVO curr : commentVOList) {
+                if (curr.getUserId() != null && curr.getUserId() > 0) {
+                    User user = userMapper.selectById(curr.getUserId());
+                    if (user != null) { // 防止 user 为 null
+                        curr.setAvatar(user.getAvatar());
+                        curr.setUsername(user.getUsername());
+                    }
+                }
+            }
+            return commentVOList;
+        } catch (Exception e) {
+            log.error("Error occurred while fetching comments for product ID: {}"+productId, e);
+            throw new RuntimeException("Failed to fetch comments", e);
+        }
+    }
+
+    @Override
+    public List<CommentVO> findSecondComment(Long commentId) {
+        List<Comment> subCommentList = commentMapper.selectList(
+                new QueryWrapper<Comment>().eq("parent_id", commentId)
+        );
+        List<CommentVO> subCommentVOList = BeanUtils.copyToList(subCommentList, CommentVO.class);
+        for (CommentVO subComment : subCommentVOList) {
+            if (subComment.getUserId() != null && subComment.getUserId() > 0) {
+                User user = userMapper.selectById(subComment.getUserId());
+                if (user != null) {
+                    subComment.setAvatar(user.getAvatar());
+                    subComment.setUsername(user.getUsername());
+                }
+            }
+        }
+        return subCommentVOList;
     }
 
 

@@ -18,40 +18,60 @@ public class GlobalExceptionHandler {
 
     /**
      * 捕获业务异常
-     * @param ex
-     * @return
      */
     @ExceptionHandler(BaseException.class)
-    public Result exceptionHandler(BaseException ex){
-        log.error("异常信息：{}", ex.getMessage());
+    public Result handleBaseException(BaseException ex) {
+        log.error("捕获到业务异常：", ex);
         return Result.error(ex.getMessage());
     }
 
     /**
-     * 处理SQL异常
-     * @param ex
-     * @return
+     * 处理SQL约束冲突异常
      */
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public Result exceptionHandler(SQLIntegrityConstraintViolationException ex) {
+    public Result handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
+        log.error("捕获到SQL约束冲突异常：", ex);
+
         String message = ex.getMessage();
-        if(message.contains("Duplicate entry")) {
-            String[] spilt = message.split(" ");
-            String username = spilt[2];
-            String msg = username + MessageConstant.ALREADY_EXISTS;
-            return Result.error(msg);
-        } else {
-            return Result.error(MessageConstant.UNKNOWN_ERROR);
+        if (message != null && message.contains("Duplicate entry")) {
+            try {
+                String[] split = message.split(" ");
+                if (split.length > 2) {
+                    String conflictingValue = split[2];
+                    return Result.error(conflictingValue + MessageConstant.ALREADY_EXISTS);
+                }
+            } catch (Exception parseEx) {
+                log.error("解析SQL异常消息失败：", parseEx);
+            }
         }
+
+        return Result.error(MessageConstant.DATABASE_CONSTRAINT_ERROR);
     }
 
+    /**
+     * 捕获非法参数异常
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public Result handleIllegalArgumentException(IllegalArgumentException ex) {
+        log.error("捕获到非法参数异常：", ex);
+        return Result.error(MessageConstant.INVALID_PARAMETER);
+    }
+
+    /**
+     * 捕获空指针异常
+     */
+    @ExceptionHandler(NullPointerException.class)
+    public Result handleNullPointerException(NullPointerException ex) {
+        log.error("捕获到空指针异常：", ex);
+        return Result.error(MessageConstant.NULL_POINTER_ERROR);
+    }
+
+    /**
+     * 捕获未知异常
+     */
     @ExceptionHandler(Exception.class)
-    public Result exceptionHandler(Exception ex) {
+    public Result handleUnknownException(Exception ex) {
+        log.error("捕获到未知异常：", ex);
         return Result.error(MessageConstant.UNKNOWN_ERROR);
     }
 }
-
-
-
-
-
