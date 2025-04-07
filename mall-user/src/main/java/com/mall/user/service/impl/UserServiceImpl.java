@@ -1,6 +1,7 @@
 package com.mall.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
@@ -62,8 +63,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Integer saveComment(Long userId,Long productId, String content, Long parentId) {
-        //判断商品是否存在
+    public Integer saveComment(Long userId, Long productId, String content, Long parentId) {
+        // 判断商品是否存在
         boolean productExists = productClient.checkProductExists(productId);
 
         if (!productExists) {
@@ -77,16 +78,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         comment.setProductId(productId);
         comment.setParentId(parentId);
 
-        Integer status=commentMapper.insert(comment);
+        // 插入评论记录
+        Integer status = commentMapper.insert(comment);
+
         if (parentId != null) {
-            // 构造更新条件
-            UpdateWrapper<Comment> updateWrapper = new UpdateWrapper<>();
-            updateWrapper.eq("id", comment.getId()) // 更新条件：id 等于 commentId
+            // 构造更新条件，使用 LambdaUpdateWrapper 避免硬编码
+            LambdaUpdateWrapper<Comment> updateWrapper = new LambdaUpdateWrapper<>();
+            updateWrapper.eq(Comment::getId, comment.getId()) // 更新条件：id 等于 commentId
                     .setSql("reply_count = reply_count + 1"); // 动态更新 reply_count
 
             // 执行更新操作
             commentMapper.update(null, updateWrapper);
         }
+
         return status;
     }
 
