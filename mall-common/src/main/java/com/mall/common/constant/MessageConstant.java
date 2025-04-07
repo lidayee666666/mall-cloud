@@ -5,6 +5,9 @@ package com.mall.common.constant;
      */
     public class MessageConstant {
 
+        public static final String NULL_POINTER_ERROR = "空指针异常";
+        public static final String INVALID_PARAMETER = "非法参数";
+        public static final String DATABASE_CONSTRAINT_ERROR = "数据库约束冲突";
         public static final String PASSWORD_ERROR = "密码错误";
         public static final String ACCOUNT_NOT_FOUND = "账号不存在";
         public static final String ACCOUNT_LOCKED = "账号被锁定";

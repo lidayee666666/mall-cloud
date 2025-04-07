@@ -127,4 +127,10 @@ public class ProductController {
         BeanUtil.copyProperties(product, dto);
         return dto;
     }
+
+    @GetMapping("/check/{productId}")
+    public boolean checkProductExists(@PathVariable Long productId) {
+        boolean exists = productService.checkProductExists(productId);
+        return exists;
+    }
 }

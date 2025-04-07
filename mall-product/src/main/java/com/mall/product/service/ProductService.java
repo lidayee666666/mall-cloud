@@ -28,5 +28,5 @@ public interface ProductService extends IService<Product> {
 
     List<String> getRecommends(QueryProductParams query) throws IOException;
 
-
+    boolean checkProductExists(Long productId) ;
 }

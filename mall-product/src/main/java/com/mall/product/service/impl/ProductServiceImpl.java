@@ -94,6 +94,11 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         return getRecommends(response);
     }
 
+    @Override
+    public boolean checkProductExists(Long productId) {
+        return this.getById(productId)!=null;
+    }
+
     List<String> getRecommends(SearchResponse response) {
         Set<String> set = new HashSet<>();
 
