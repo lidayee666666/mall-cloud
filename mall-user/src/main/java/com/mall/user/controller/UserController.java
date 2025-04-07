@@ -95,20 +95,13 @@ public class UserController {
             return Result.error("修改失败");
         }
     }
+
     @GetMapping("/pwdInfo")
     @Operation(summary = "查询用户信息", description = "查密码和账号") // 替换 @ApiOperation
-    public Result<Map<String, Object>> pwdInfo(@RequestHeader("Authorization") String token){
+    public Result<Map<String, Object>> pwdInfo(){
         //后端传回username account
         log.info("查询密码和账号");
-        // 解析 Token 获取用户 ID
-        Long userId = jwtTool.parseToken(token);
-        User user = userService.getById(userId);
-        // 构造返回数据
-        Map<String, Object> response = new HashMap<>();
-        response.put("username", user.getUsername());
-        response.put("account", user.getId());
-
-        return Result.success(response);
+        return Result.success(userService.pwdInfo());
     }
 
     @GetMapping("/saveComment")
