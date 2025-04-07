@@ -80,15 +80,11 @@ public class UserController {
     }
     @PutMapping("/savePwd")
     @Operation(summary = "修改用户信息", description = "修改密码") // 替换 @ApiOperation
-    public Result<Integer>savePwd(@RequestHeader("Authorization") String token,
-                                   String newPassword){
+    public Result<Integer>savePwd(String newPassword){
         //根据id修改密码 成功返回200 不成功返回201
         log.info("修改密码");
-        // 解析 Token 获取用户 ID
-        Long userId = jwtTool.parseToken(token);
-        User user = userService.getById(userId);
         String encodedPassword = passwordEncoder.encode(newPassword);
-        boolean isUpdate= userService.savePwd(userId,encodedPassword);
+        boolean isUpdate= userService.savePwd(UserContext.getUser(),encodedPassword);
         if(isUpdate) {
             return Result.success(200);
         }else {
