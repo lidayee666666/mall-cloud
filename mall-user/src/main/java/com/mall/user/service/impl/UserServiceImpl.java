@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.mall.api.client.ProductClient;
 import com.mall.common.utils.BeanUtils;
+import com.mall.common.utils.UserContext;
 import com.mall.user.domain.entity.Comment;
 import com.mall.user.domain.vo.CommentVO;
 import com.mall.user.mapper.CommentMapper;
@@ -16,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -134,6 +137,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             }
         }
         return subCommentVOList;
+    }
+
+    @Override
+    public Map<String, Object> pwdInfo() {
+        User user = this.getById(UserContext.getUser());
+        // 构造返回数据
+        Map<String, Object> response = new HashMap<>();
+        response.put("username", user.getUsername());
+        response.put("account", user.getUsername());
+        return response;
     }
 
 
