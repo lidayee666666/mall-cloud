@@ -3,6 +3,7 @@ package com.mall.user.controller;
 import com.mall.common.result.Result;
 import com.mall.api.domain.entity.User;
 import com.mall.common.utils.UserContext;
+import com.mall.user.domain.vo.CommentVO;
 import com.mall.user.service.UserService;
 import com.mall.user.utils.JwtTool;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -109,6 +111,37 @@ public class UserController {
         return Result.success(response);
     }
 
+    @GetMapping("/saveComment")
+    @Operation(summary = "保存评论") // 替换 @ApiOperation
+    public Result<Integer>saveComment(Long productId,String content,Long parentId){
+        //前端传authorization（UsertToken)productId
+        // content  三个变量 后端根据usertoken解析userid
+        log.info("保存评论");
+        Integer status=userService.saveComment(UserContext.getUser(),productId,content,parentId);
+        if(status==1) {
+            return Result.success(200);
+        }else {
+            return Result.error("评论保存失败");
+        }
+    }
+
+    @GetMapping("/findComment")
+    @Operation(summary = "查询评论") // 替换 @ApiOperation
+    public Result<List<CommentVO>>findComment(Long productId){
+        log.info("查询评论");
+        //后端传回来id user.img user.Nickname commentTime Content replyCount
+        List<CommentVO> commentVOSList=userService.findComment(productId);
+        return Result.success(commentVOSList);
+    }
+
+    @GetMapping("/findSecondComment")
+    @Operation(summary = "查询二级评论") // 替换 @ApiOperation
+    public Result<List<CommentVO> >findSecondComment(@RequestHeader("Authorization") String token,
+                                                                           Long commentId){
+        log.info("查询二级评论");
+        List<CommentVO> commentVOSList=userService.findSecondComment(commentId);
+        return Result.success(commentVOSList);
+    }
 
 }
 
