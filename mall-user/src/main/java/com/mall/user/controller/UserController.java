@@ -131,6 +131,12 @@ public class UserController {
         return Result.success(commentVOSList);
     }
 
+    @PostMapping("/updateUser")
+    @Operation(summary = "用户修改个人信息")
+    public Result<Integer> updateUser(@RequestBody User user){
+        return Result.success(userService.updateById(user) ?1:0);
+    }
+
 }
 
 
