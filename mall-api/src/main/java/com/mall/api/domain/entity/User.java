@@ -18,6 +18,7 @@ public class User {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private String username;
+    private String nickname;
     //序列化时不会将密码序列化,防止密码传至前端
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
