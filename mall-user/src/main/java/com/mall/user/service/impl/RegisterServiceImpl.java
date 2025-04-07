@@ -59,45 +59,30 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public Result<String> register(String username, String password, String confirmedPassword, String phone) {
-        Map<String, String> map = new HashMap<>();
 
         if(username == null) {
-//            map.put("error_message", "用户名不能为空");
-//            return map;
             return Result.error("用户名不能为空");
         }
         if(password == null || confirmedPassword == null) {
-//            map.put("error_message", "密码不能为空");
-//            return map;
             return Result.error("密码不能为空");
         }
 
         username = username.trim();
-        if(username.length() == 0) {
-//            map.put("error_message", "用户名不能为空");
-//            return map;
+        if(username.isEmpty()) {
             return Result.error("用户名不能为空");
         }
-        if(password.length() == 0 || confirmedPassword.length() == 0) {
-//            map.put("error_message", "密码不能为空");
-//            return map;
+        if(password.isEmpty() || confirmedPassword.isEmpty()) {
             return Result.error("密码不能为空");
         }
 
         if(username.length() > 20) {
-//            map.put("error_message", "用户名长度不能大于20");
-//            return map;
             return Result.error("用户名长度不能大于20");
         }
         if(password.length() > 20 || confirmedPassword.length() > 20) {
-//            map.put("error_message", "密码长度不能大于20");
-//            return map;
             return Result.error("密码长度不能大于20");
         }
 
         if(!password.equals(confirmedPassword)) {
-//            map.put("error_message", "两次输入的密码不一致");
-//            return map;
             return Result.error("两次输入的密码不一致");
         }
 
@@ -105,17 +90,17 @@ public class RegisterServiceImpl implements RegisterService {
         queryWrapper.eq("username", username);
         List<User> users = userMapper.selectList(queryWrapper);
         if (!users.isEmpty()) {
-//            map.put("error_message", "账号已存在");
-//            return map;
             return Result.error("账号已存在");
         }
 
         String encodedPassword = passwordEncoder.encode(password);
 
-        User user = new User(null, username, encodedPassword, phone, null, null, null, null, null, false);
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(encodedPassword);
+        user.setPhone(phone);
         userMapper.insert(user);
 
-//        map.put("error_message", "success");
         return Result.success("注册成功");
     }
 }
