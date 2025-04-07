@@ -105,8 +105,8 @@ public class UserController {
     }
 
     @GetMapping("/saveComment")
-    @Operation(summary = "保存评论") // 替换 @ApiOperation
-    public Result<Integer>saveComment(Long productId,String content,Long parentId){
+    @Operation(summary = "保存评论")
+    public Result<Integer> saveComment(Long productId,String content,Long parentId){
         //前端传authorization（UsertToken)productId
         // content  三个变量 后端根据usertoken解析userid
         log.info("保存评论");
@@ -129,8 +129,7 @@ public class UserController {
 
     @GetMapping("/findSecondComment")
     @Operation(summary = "查询二级评论") // 替换 @ApiOperation
-    public Result<List<CommentVO> >findSecondComment(@RequestHeader("Authorization") String token,
-                                                                           Long commentId){
+    public Result<List<CommentVO> >findSecondComment(Long commentId){
         log.info("查询二级评论");
         List<CommentVO> commentVOSList=userService.findSecondComment(commentId);
         return Result.success(commentVOSList);
