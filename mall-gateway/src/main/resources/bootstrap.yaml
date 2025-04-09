@@ -3,11 +3,14 @@ spring:
     name: gateway
   cloud:
     nacos:
-      #server-addr: 192.168.145.128:8848
       server-addr: localhost:8848
-#      server-addr: 172.18.160.51:8848 # nacos地址
     gateway:
       routes:
+        # 业务路由
+        - id: user
+          uri: lb://mall-user
+          predicates:
+            - Path=/users/api/**,/addresses/api/**,/captcha
         - id: product
           uri: lb://mall-product
           predicates:
@@ -16,10 +19,6 @@ spring:
           uri: lb://mall-cart
           predicates:
             - Path=/carts/api/**
-        - id: user
-          uri: lb://mall-user
-          predicates:
-            - Path=/users/api/**,/addresses/api/**,/captcha
         - id: payment
           uri: lb://mall-payment
           predicates:
@@ -32,11 +31,103 @@ spring:
           uri: lb://mall-ai
           predicates:
             - Path=/ai/api/**
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOriginPatterns: "*"
-            allowedMethods: "*"
-            allowedHeaders: "*"
-            allowCredentials: true
-        add-to-simple-url-handler-mapping: true
+        
+        # Knife4j文档路由
+        - id: knife4j-doc
+          uri: lb://mall-user
+          predicates:
+            - Path=/doc.html
+          filters:
+            - PreserveHostHeader
+
+        # Knife4j静态资源路由
+        - id: knife4j-webjars
+          uri: lb://mall-user
+          predicates:
+            - Path=/webjars/**
+          filters:
+            - RewritePath=/webjars/(?<segment>.*), /webjars/$\{segment}
+            - AddResponseHeader=Access-Control-Allow-Origin, *
+
+        # Swagger配置路由
+        - id: knife4j-api
+          uri: lb://mall-user
+          predicates:
+            - Path=/v3/api-docs/**, /swagger-resources/**
+          filters:
+            - PreserveHostHeader
+
+        # API文档路由
+        - id: swagger-provider
+          uri: lb://mall-user
+          predicates:
+            - Path=/*/v3/api-docs/**
+          filters:
+            - RewritePath=/(?<segment>.*?)/v3/api-docs/(?<path>.*), /$\{segment}/v3/api-docs/$\{path}
+
+knife4j:
+  gateway:
+    enabled: true
+    strategy: manual
+    routes:
+      - name: 用户服务
+        url: /mall-user/v3/api-docs
+        service-name: mall-user
+      - name: 商品服务
+        url: /mall-product/v3/api-docs
+        service-name: mall-product
+      - name: 订单服务
+        url: /mall-order/v3/api-docs
+        service-name: mall-order
+      - name: 支付服务
+        url: /mall-payment/v3/api-docs
+        service-name: mall-payment
+      - name: 购物车服务
+        url: /mall-cart/v3/api-docs
+        service-name: mall-cart
+      - name: AI服务
+        url: /mall-ai/v3/api-docs
+        service-name: mall-ai
+
+# SpringDoc配置
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    urls-primary-name: 用户服务
+
+# Knife4j配置
+#knife4j:
+#  enable: true
+#  gateway:
+#    enabled: true
+#    discover:
+#      enabled: false
+#    routes:
+#      - name: 用户服务
+#        url: /v3/api-docs/mall-user
+#        service-name: mall-user
+#        order: 1
+#      - name: 商品服务
+#        url: /v3/api-docs/mall-product
+#        service-name: mall-product
+#        order: 2
+#      - name: 订单服务
+#        url: /v3/api-docs/mall-order
+#        service-name: mall-order
+#        order: 3
+#      - name: 支付服务
+#        url: /v3/api-docs/mall-payment
+#        service-name: mall-payment
+#        order: 4
+#      - name: 购物车服务
+#        url: /v3/api-docs/mall-cart
+#        service-name: mall-cart
+#        order: 5
+#      - name: AI服务
+#        url: /v3/api-docs/mall-ai
+#        service-name: mall-ai
+#        order: 6
+#  basic:
+#    enable: false  # 暂时禁用认证，便于调试

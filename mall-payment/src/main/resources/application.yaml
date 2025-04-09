@@ -41,15 +41,23 @@ mybatis-plus:
       update-strategy: not_null
       id-type: auto
 
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
 knife4j:
   enable: true
   openapi:
-    title: ${mall.swagger.title:抖音电商接口文档}
-    description: ${mall.swagger.description:抖音电商接口文档}
-    version: v1.0.0
+    title: ${spring.application.name}接口文档
+    description: ${spring.application.name}接口文档
+    version: 1.0.0
     group:
       default:
-        group-name: default
+        group-name: 默认分组
         api-rule: package
         api-rule-resources:
-          - ${mall.swagger.package}
+          - com.mall.payment.controller

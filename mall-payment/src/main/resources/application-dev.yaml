@@ -5,7 +5,3 @@ mall:
     database: mall-payment
     user: root
     password: root
-  swagger:
-    title: "抖音电商商品服务接口文档"
-    description: "抖音电商商品服务接口文档"
-    package: com.mall.payment.controller

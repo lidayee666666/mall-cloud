@@ -1,9 +1,18 @@
 server:
   port: 8080
+  max-http-header-size: 65536  # 恢复默认值
 
-logging:
-  level:
-    org.springframework.cloud.gateway: DEBUG
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
+      httpclient:
+        max-header-size: 65536  # 恢复默认值
+
 
 douyinmall:
   jwt:
@@ -12,11 +21,18 @@ douyinmall:
     password: hmall123 # 秘钥文件密码
     tokenTTL: 30m # 登录有效期
   auth:
-    excludePaths: # 无需登录校验的路径
+    excludePaths:
+      - /*/v3/api-docs/**
+      - /v3/api-docs/**
+      - /doc.html
+      - /swagger-resources/**
+      - /webjars/**
+      - /users/api/login/**        # 登录接口
+      - /users/api/register     # 注册接口
       - /search/**
-      - /users/api/login/**
-      - /users/api/register
       - /products/api/select/**
       - /products/api/categories/select/**
       - /captcha
       - /ai/api/**
+
+
