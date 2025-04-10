@@ -34,5 +34,7 @@ douyinmall:
       - /products/api/categories/select/**
       - /captcha
       - /ai/api/**
+      - /users/api/findComment
+      - /users/api/findSecondComment
 
 
