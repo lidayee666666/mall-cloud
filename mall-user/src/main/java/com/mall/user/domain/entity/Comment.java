@@ -1,5 +1,6 @@
 package com.mall.user.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+@TableName("comment")
 public class Comment {
     private Long id;
     private Long productId;

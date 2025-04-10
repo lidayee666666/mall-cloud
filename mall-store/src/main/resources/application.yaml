@@ -15,15 +15,28 @@ mybatis-plus:
       update-strategy: not_null
       id-type: auto
 
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
 knife4j:
   enable: true
+  setting:
+    language: zh_cn
   openapi:
-    title: ${mall.swagger.title:抖音电商接口文档}
-    description: ${mall.swagger.description:抖音电商接口文档}
-    version: v1.0.0
+    title: ${spring.application.name}接口文档
+    description: ${spring.application.name}接口文档
+    version: 1.0.0
+    license: Apache 2.0
+    license-url: https://stackoverflow.com/
+    terms-of-service-url: https://stackoverflow.com/
     group:
       default:
-        group-name: default
+        group-name: 默认分组
         api-rule: package
         api-rule-resources:
-          - ${mall.swagger.package}
+          - com.mall.store.controller

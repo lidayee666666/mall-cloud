@@ -73,7 +73,7 @@ public class ProductController {
     }
 
     @Operation(summary = "新增商品", description = "创建新的商品信息")
-    @PostMapping
+    @PostMapping("/add")
     public Result save(
             @Parameter(description = "商品信息", required = true)
             @RequestBody ProductDTO productDTO) {
@@ -112,6 +112,7 @@ public class ProductController {
         return Result.success(pageDTO);
     }
 
+
     @Operation(summary = "分类分页查询", description = "按分类分页查询商品")
     @GetMapping("/select/page/{categoryId}")
     public Result<PageDTO<ProductDTO>> queryProductWithCategoryByPage(
@@ -121,6 +122,8 @@ public class ProductController {
         log.info("按类型：{}查找商品：{}", categoryId, query);
         return Result.success(productService.queryProductWithCategoryByPage(query, categoryId));
     }
+
+
 
     private ProductDTO convertToDTO(Product product) {
         ProductDTO dto = new ProductDTO();

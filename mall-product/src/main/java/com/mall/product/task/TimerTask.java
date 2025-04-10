@@ -27,8 +27,8 @@ public class TimerTask {
         * 月（每个月）
         ? 星期（不指定）
     */
-    @Scheduled(cron = "0 0 0 * * ?")
-    //@Scheduled(fixedRate = 20 * 60 * 1000)
+    //@Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(fixedRate = 20 * 60 * 1000)
     public void productToES() {
         // 添加到ES中
         try {
