@@ -46,10 +46,7 @@ public class OrdersAddServiceImpl implements OrdersAddService {
             if (quantity > orderDetailProduct.getStock()) {
                 return Result.error("库存不足");
             }
-            /*orderDetailProducts.put(orderDetailProduct, quantity);
-            // 使用 BigDecimal 计算总价
-            totalFee = totalFee.add(orderDetailProduct.getPrice().multiply(BigDecimal.valueOf(quantity)));*/
-            // 确保product.getPrice()返回的是分单位
+
             totalFee += orderDetailProduct.getPrice() * quantity;
             orderDetailProducts.put(orderDetailProduct, quantity);
         }
@@ -58,7 +55,7 @@ public class OrdersAddServiceImpl implements OrdersAddService {
         orders.setTotalFee(totalFee);
         orders.setPaymentType(ordersDTO.getPaymentType());
         orders.setUserId(UserContext.getUser());
-        orders.setStatus(1);
+        orders.setStatus(3);
 //        Orders orders = new Orders(null,
 //                totalFee, // 总价
 //                ordersDTO.getPaymentType(),

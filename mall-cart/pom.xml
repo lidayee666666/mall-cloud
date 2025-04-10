@@ -32,8 +32,6 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
-
-
         <!-- Redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,6 +48,11 @@
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
 
         <!-- Nacos Discovery 依赖 -->

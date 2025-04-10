@@ -14,6 +14,7 @@ import com.mall.user.mapper.CommentMapper;
 import com.mall.user.mapper.UserMapper;
 import com.mall.api.domain.entity.User;
 import com.mall.user.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -63,7 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Integer saveComment(Long userId, Long productId, String content, Long parentId) {
+    public Integer saveComment(@Param("userId") Long userId, @Param("productId") Long productId, @Param("content") String content, @Param("parentId") Long parentId) {
         // 判断商品是否存在
         boolean productExists = productClient.checkProductExists(productId);
 
@@ -84,7 +85,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (parentId != null) {
             // 构造更新条件，使用 LambdaUpdateWrapper 避免硬编码
             LambdaUpdateWrapper<Comment> updateWrapper = new LambdaUpdateWrapper<>();
-            updateWrapper.eq(Comment::getId, comment.getId()) // 更新条件：id 等于 commentId
+            updateWrapper.eq(Comment::getId, comment.getParentId()) // 更新条件：id 等于 parentId
                     .setSql("reply_count = reply_count + 1"); // 动态更新 reply_count
 
             // 执行更新操作
@@ -102,7 +103,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             List<Comment> firstCommentList = commentMapper.selectList(
                     new QueryWrapper<Comment>()
                             .eq("product_id", productId)
-                            .isNull("parent_id") // 一级评论的 parent_id 为 null
+                            .isNull("parent_id").orderBy(true, false, "com_time")
             );
 
             // 转换为 CommentVO 列表
@@ -128,7 +129,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public List<CommentVO> findSecondComment(Long commentId) {
         List<Comment> subCommentList = commentMapper.selectList(
-                new QueryWrapper<Comment>().eq("parent_id", commentId)
+                new QueryWrapper<Comment>().eq("parent_id", commentId).orderBy(true, false, "com_time")
         );
         List<CommentVO> subCommentVOList = BeanUtils.copyToList(subCommentList, CommentVO.class);
         for (CommentVO subComment : subCommentVOList) {
@@ -137,6 +138,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 if (user != null) {
                     subComment.setAvatar(user.getAvatar());
                     subComment.setUsername(user.getUsername());
+                    subComment.setNickname(user.getNickname());
                 }
             }
         }

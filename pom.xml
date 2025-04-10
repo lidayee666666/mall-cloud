@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <name>douyin-mall-cloud</name>
-    <description>抖音商城微服务项目</description>
+    <description>商城微服务项目</description>
 
     <properties>
         <java.version>17</java.version>

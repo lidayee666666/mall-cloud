@@ -5,7 +5,3 @@ mall:
     database: mall-store
     user: root
     password: root
-  swagger:
-    title: "抖音电商商家服务接口文档"
-    description: "抖音电商商家服务接口文档"
-    package: com.mall.store.controller
