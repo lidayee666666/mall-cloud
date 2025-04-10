@@ -16,6 +16,7 @@ public class CommentVO {
     private Long userId;
     private String avatar;
     private String username;
+    private String nickname;
     private String content;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private Date comTime;

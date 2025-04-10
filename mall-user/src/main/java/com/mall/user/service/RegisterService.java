@@ -5,5 +5,5 @@ import com.mall.common.result.Result;
 import java.util.Map;
 
 public interface RegisterService {
-    public Result<String> register(String username, String password, String confirmedPassword, String phone);
+    Result<String> register(String username, String password, String confirmedPassword, String phone);
 }

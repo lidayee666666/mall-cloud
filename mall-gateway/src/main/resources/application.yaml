@@ -30,7 +30,7 @@ douyinmall:
       - /users/api/login/**        # 登录接口
       - /users/api/register     # 注册接口
       - /search/**
-      - /products/api/select/**
+      - /products/api/**
       - /products/api/categories/select/**
       - /captcha
       - /ai/api/**

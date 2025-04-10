@@ -34,10 +34,11 @@ public class LoginController {
     public Result<Map<String, String>> login(@RequestBody Map<String, String> map) {
         String username = map.get("username");
         String password = map.get("password");
-        System.out.println(map);
+
         String s = stringRedisTemplate.opsForValue().get(map.get("verKey"));
         String Yzm = map.get("Yzm");
         Map<String, String> login = loginService.login(username, password, s, Yzm);
+        System.out.println(login);
         return Result.success(login);
     }
 
