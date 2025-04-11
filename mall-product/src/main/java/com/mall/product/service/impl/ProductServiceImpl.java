@@ -99,6 +99,18 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         return this.getById(productId)!=null;
     }
 
+    @Override
+    public PageDTO<ProductDTO> guessYou(PageQuery query, String category) {
+        // 种类名称对应的商品
+        LambdaQueryWrapper<Product> productLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        productLambdaQueryWrapper.eq(Product::getCategory, category);
+        // 1.分页查询
+        Page<Product> result = page(query.toMpPage("update_time", false), productLambdaQueryWrapper);
+        // 2.封装并返回
+        PageDTO<ProductDTO> pageDTO = PageDTO.of(result, ProductDTO.class);
+        return pageDTO;
+    }
+
     List<String> getRecommends(SearchResponse response) {
         Set<String> set = new HashSet<>();
 
@@ -211,7 +223,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
                 }
             }
 
-//            System.out.println(productDoc);
             list.add(productDoc);
         }
         List<ProductVO> productVOS = BeanUtil.copyToList(list, ProductVO.class);

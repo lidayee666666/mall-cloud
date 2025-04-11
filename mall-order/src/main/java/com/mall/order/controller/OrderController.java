@@ -1,6 +1,5 @@
 package com.mall.order.controller;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.mall.common.result.Result;
 import com.mall.order.pojo.OrderDetail;
 import com.mall.order.pojo.Orders;
