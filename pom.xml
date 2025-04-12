@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>douyin-mall-cloud</name>
+    <name>mall-cloud</name>
     <description>商城微服务项目</description>
 
     <properties>
