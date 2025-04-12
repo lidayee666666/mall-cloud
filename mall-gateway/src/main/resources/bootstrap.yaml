@@ -120,12 +120,11 @@ knife4j:
         url: /mall-ai/v3/api-docs
         service-name: mall-ai
         order: 6
-      - name: 搜索服务
-        url: /mall-search/v3/api-docs
-        service-name: mall-search
+      - name: 商家服务
+        url: /mall-store/v3/api-docs
+        service-name: mall-store
         order: 7
   setting:
     language: zh_cn
-    enable-swagger-models: true
     enable-document-manage: true
     enable-home-custom: true
