@@ -16,8 +16,8 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("青龙商城API文档")
+                        .title("StarMarket商城API文档")
                         .version("1.0")
-                        .description("青龙商城微服务系统API文档"));
+                        .description("StarMarket商城微服务系统API文档"));
     }
 }
