@@ -57,8 +57,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     private boolean checkRole() {
         Long userId = UserContext.getUser();
-        Result<User> result = userClient.getById(userId);
-        User user = result.getData();
+        User user = userClient.getById(userId);
         return user.getPlatformAdmin();
     }
 }
