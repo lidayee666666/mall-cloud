@@ -137,6 +137,11 @@ public class UserController {
         return Result.success(userService.updateById(user) ?1:0);
     }
 
+    @GetMapping("/users/api/{id}")
+    User getById(@PathVariable("id") Long id){
+        return userService.getById(id);
+    }
+
 }
 
 

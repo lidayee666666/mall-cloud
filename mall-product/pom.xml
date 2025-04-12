@@ -43,10 +43,10 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springdoc</groupId>-->
+<!--            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>-->
+<!--        </dependency>-->
         <!-- 文档生成 -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
@@ -88,7 +88,11 @@
             <groupId>com.lql.mall</groupId>
             <artifactId>mall-api</artifactId>
         </dependency>
-
+        <!-- 数据持久化 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
 
     </dependencies>
 </project>

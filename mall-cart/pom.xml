@@ -14,6 +14,11 @@
     <description>购物车服务</description>
 
     <dependencies>
+        <!-- 数据持久化 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
         <!-- 公共模块 -->
         <dependency>
             <groupId>com.lql.mall</groupId>
@@ -50,10 +55,10 @@
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springdoc</groupId>-->
+<!--            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>-->
+<!--        </dependency>-->
 
         <!-- Nacos Discovery 依赖 -->
         <dependency>

@@ -29,4 +29,6 @@ public interface ProductService extends IService<Product> {
     List<String> getRecommends(QueryProductParams query) throws IOException;
 
     boolean checkProductExists(Long productId) ;
+
+    PageDTO<ProductDTO> guessYou(PageQuery query, String category);
 }

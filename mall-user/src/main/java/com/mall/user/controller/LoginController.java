@@ -1,14 +1,13 @@
 package com.mall.user.controller;
 
+import com.mall.api.client.StoreClient;
 import com.mall.common.result.Result;
 import com.mall.user.service.LoginService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -17,6 +16,8 @@ import java.util.Map;
 @Slf4j
 public class LoginController {
 
+    @Autowired
+    private StoreClient storeClient;
     @Autowired
     private LoginService loginService;
     /**
@@ -52,4 +53,6 @@ public class LoginController {
         Map<String, String> staffLogin = loginService.staffLogin(username, password, s, Yzm);
         return Result.success(staffLogin);
     }
+
+
 }

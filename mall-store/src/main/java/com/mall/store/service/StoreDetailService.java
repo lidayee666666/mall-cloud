@@ -5,10 +5,13 @@ import com.mall.api.domain.entity.SimpleStore;
 import com.mall.api.domain.entity.User;
 import com.mall.store.pojo.dto.StoreUpdateDTO;
 import com.mall.store.pojo.entity.Store;
+import com.mall.store.pojo.entity.StoreDetail;
+import com.mall.store.pojo.vo.StoreDetailVO;
 
-public interface StoreService extends IService<Store> {
-    SimpleStore getStoreNameById(Long id);
+public interface StoreDetailService extends IService<StoreDetail> {
 
-    User checkStoreStaff();
 
+    void updateStoreInfo(Long storeId, StoreUpdateDTO dto);
+
+    StoreDetailVO getStoreDetail(Long storeId);
 }
