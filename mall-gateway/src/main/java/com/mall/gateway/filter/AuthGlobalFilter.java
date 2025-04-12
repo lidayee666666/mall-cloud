@@ -31,13 +31,12 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-//        System.out.println("过滤器执行了");
+
         // 1.获取Request
         ServerHttpRequest request = exchange.getRequest();
         // 2.判断是否不需要拦截
         if(isExclude(request.getPath().toString())){
-            // 无需拦截，直接放行
-//            System.out.println("不用过滤");
+
             return chain.filter(exchange);
         }
 //        System.out.println("需要过滤");
