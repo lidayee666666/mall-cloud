@@ -5,21 +5,37 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @TableName("staff")
 public class Staff {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+
+    //员工的用户表id
+    private Long userId;
+
+    //员工所属商家id
+    private Long storeId;
+
     /**
-     * 商家名称
+     * 员工状态，1启用，0关闭
      */
-    private Long user_id;
+    private Long status;
+
     /**
-     * 商家状态，1启用，0关闭
+     * 职位名称
      */
-    private Long store_id;
+    private String position;
+
     /**
      * 创建时间
      */
-    private String position;
+    private LocalDateTime createAt;
+
+    /**
+     * 修改时间
+     */
+    private LocalDateTime updatedAt;
 }

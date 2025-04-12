@@ -1,4 +1,4 @@
-package com.mall.api.domain.entity;
+package com.mall.store.pojo.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@TableName("staff")
-public class Staff {
+public class StaffAddDTO {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 

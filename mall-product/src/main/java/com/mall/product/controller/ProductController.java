@@ -103,13 +103,13 @@ public class ProductController {
     }
 
     @Operation(summary = "分页查询", description = "通用商品分页查询")
-    @GetMapping("/select/page")
+    @GetMapping("/select/page/{category}")
     public Result<PageDTO<ProductDTO>> queryProductByPage(
-            @Parameter(description = "分页参数") PageQuery query) {
-        Page<Product> result = productService.page(query.toMpPage("update_time", false));
-        PageDTO<ProductDTO> pageDTO = PageDTO.of(result, ProductDTO.class);
-        pageDTO.getList().forEach(ProductDTO::getPriceYuan);
-        return Result.success(pageDTO);
+            @Parameter(description = "分页参数") PageQuery query, @PathVariable String category) {
+        //Page<Product> result = productService.page(query.toMpPage("update_time", false));
+       // PageDTO<ProductDTO> pageDTO = PageDTO.of(result, ProductDTO.class);
+        //pageDTO.getList().forEach(ProductDTO::getPriceYuan);
+        return Result.success(productService.guessYou(query,category));
     }
 
 
