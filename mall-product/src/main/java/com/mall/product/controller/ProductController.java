@@ -112,6 +112,16 @@ public class ProductController {
         return Result.success(productService.guessYou(query,category));
     }
 
+    @Operation(summary = "分页查询", description = "通用商品分页查询")
+    @GetMapping("/select/page")
+    public Result<PageDTO<ProductDTO>> queryProductByPage(
+            @Parameter(description = "分页参数") PageQuery query) {
+        Page<Product> result = productService.page(query.toMpPage("update_time", false));
+        PageDTO<ProductDTO> pageDTO = PageDTO.of(result, ProductDTO.class);
+        pageDTO.getList().forEach(ProductDTO::getPriceYuan);
+        return Result.success(pageDTO);
+    }
+
 
     @Operation(summary = "分类分页查询", description = "按分类分页查询商品")
     @GetMapping("/select/page/{categoryId}")
