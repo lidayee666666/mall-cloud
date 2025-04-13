@@ -26,7 +26,8 @@ public class PayController {
     public Result<PaymentVO> pay(@RequestBody PaymentDTO paymentDTO) {
         log.info("创建支付订单，商品IDs: {}, 金额: {}",
                 paymentDTO.getCartIds(),
-                paymentDTO.getTotalAmount());
+                paymentDTO.getAmount());
+
         try {
             //支付成功
             Result<PaymentVO> result = payService.pay(paymentDTO);

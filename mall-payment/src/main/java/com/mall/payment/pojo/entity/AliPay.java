@@ -9,8 +9,8 @@ import lombok.Data;
  */
 @Data
 public class AliPay {
-    private String traceNo;
+    private String tradeNo;
     private double totalAmount;
     private String subject;
-    private String alipayTraceNo;
+    private String alipayTradeNo;
 }

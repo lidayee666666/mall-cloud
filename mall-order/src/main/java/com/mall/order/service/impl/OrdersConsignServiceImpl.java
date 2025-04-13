@@ -24,4 +24,9 @@ public class OrdersConsignServiceImpl implements OrdersConsignService {
         ordersMapper.updateById(orders);
         return Result.success("修改订单发货状态成功！");
     }
+
+    @Override
+    public Integer getStatus(Long id) {
+        return ordersMapper.selectById(id).getStatus();
+    }
 }
