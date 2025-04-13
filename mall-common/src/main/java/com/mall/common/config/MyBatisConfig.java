@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnClass({MybatisPlusInterceptor.class, BaseMapper.class})
 public class MyBatisConfig {
+
     @Bean
     @ConditionalOnMissingBean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
