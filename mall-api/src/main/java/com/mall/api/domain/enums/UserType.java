@@ -1,11 +1,13 @@
 package com.mall.api.domain.enums;
 
+import com.baomidou.mybatisplus.annotation.IEnum;
+
 /**
  * @author 李青龙
  * @date 2025/04/12 17:41
  * 功能描述:
  */
-public enum UserType {
+public enum UserType implements IEnum<String> {
     CUSTOMER("customer"), // 普通顾客
     STAFF("staff");       // 商家员工
 
