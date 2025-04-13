@@ -36,7 +36,6 @@ spring:
           predicates:
             - Path=/staff/api/**,/store/api/**,
 
-
         - id: swagger-resources
           uri: lb://mall-user
           predicates:

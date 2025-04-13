@@ -24,6 +24,7 @@ public class Payment {
     private Integer amount;
     private Integer payType;
     private Integer status;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private Date  paySuccessTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
@@ -33,6 +34,7 @@ public class Payment {
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private Date updateTime;
+
     private Long  creator;
     private Long updater;
     private Integer isDelete;

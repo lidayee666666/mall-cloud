@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 //读取yml文件中alipay 开头的配置
 @ConfigurationProperties(prefix = "alipay")
 public class AliPayConfig {
+
     private String appId;
     private String appPrivateKey;
     private String alipayPublicKey;
