@@ -22,7 +22,7 @@ spring:
         - id: payment
           uri: lb://mall-payment
           predicates:
-            - Path=/payments/api/**
+            - Path=/payments/api/**,/alipay/**
         - id: order
           uri: lb://mall-order
           predicates:
