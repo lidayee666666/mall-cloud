@@ -28,11 +28,14 @@ public class OrdersAddServiceImpl implements OrdersAddService {
 
     @Override
     public Result<String> addOrders(OrdersDTO ordersDTO) {
+
         if (ordersDTO == null) {
             return Result.error("订单为空");
         }
+
         Map<Long, Integer> items = ordersDTO.getItems();
         int totalFee = 0; // 使用分单位计算
+
         Map<OrderDetailProduct, Integer> orderDetailProducts = new HashMap<>();
         for (Map.Entry<Long, Integer> entry : items.entrySet()) {
             Long productId = entry.getKey();
@@ -55,7 +58,7 @@ public class OrdersAddServiceImpl implements OrdersAddService {
         orders.setTotalFee(totalFee);
         orders.setPaymentType(ordersDTO.getPaymentType());
         orders.setUserId(UserContext.getUser());
-        orders.setStatus(3);
+        orders.setStatus(1);//未付款
 //        Orders orders = new Orders(null,
 //                totalFee, // 总价
 //                ordersDTO.getPaymentType(),
@@ -93,6 +96,6 @@ public class OrdersAddServiceImpl implements OrdersAddService {
             );
             orderDetailMapper.insert(orderDetail);
         }
-        return Result.success("下单成功！");
+        return Result.success(String.valueOf(orders.getId()));
     }
 }

@@ -11,8 +11,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @FeignClient(value = "mall-product")
 public interface ProductClient {

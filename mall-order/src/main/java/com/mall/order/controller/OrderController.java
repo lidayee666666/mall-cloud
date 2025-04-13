@@ -1,5 +1,6 @@
 package com.mall.order.controller;
 
+import com.mall.api.domain.entity.OrderDetailProduct;
 import com.mall.common.result.Result;
 import com.mall.order.pojo.OrderDetail;
 import com.mall.order.pojo.Orders;
@@ -9,11 +10,9 @@ import com.mall.order.pojo.vo.OrdersVO;
 import com.mall.order.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +23,7 @@ import java.util.stream.Collectors;
 public class OrderController {
     @Autowired
     private OrdersAddService ordersAddService;
+
 
     @Operation(summary = "添加订单")
     @PostMapping("/add")
@@ -66,8 +66,13 @@ public class OrderController {
     private OrdersConsignService ordersConsignService;
 
     @Operation(summary = "发货后更改订单状态和发货时间")
-    @PostMapping("/consignUpdate")
-    public Result<String> consign(@RequestBody Long orderId) {
-        return ordersConsignService.consign(orderId);
+    @PostMapping("/consignUpdate/{id}")
+    public Result<String> consign(@PathVariable Long id) {
+        return ordersConsignService.consign(id);
+    }
+
+    @GetMapping("/getStatus/{id}")
+    public Result<Integer> getStatus(@PathVariable Long id) {
+        return Result.success(ordersConsignService.getStatus(id));
     }
 }

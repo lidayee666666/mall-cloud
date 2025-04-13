@@ -1,7 +1,7 @@
 package com.mall.payment.service.impl;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import cn.hutool.core.bean.BeanUtil;
 import com.mall.common.result.Result;
 import com.mall.common.utils.UserContext;
 import com.mall.payment.mapper.PaymentMapper;
@@ -32,30 +32,33 @@ public class PaymentServiceImpl implements PaymentService {
 
    @Transactional(rollbackFor = Exception.class)
     public Result<PaymentVO>  pay(PaymentDTO paymentDTO) {
-        Payment payment=new Payment();
+        Payment payment= BeanUtil.toBean(paymentDTO,Payment.class);
+
         PaymentVO paymentVO=new PaymentVO();
+
         try {
 
             //设置支付信息
-
             payment.setPayOrderNo((long) (Math.random() * 900_000_000) + 100_000_000);
             payment.setPayChannelCode("0");
+
             payment.setBizUserId(UserContext.getUser());
-            payment.setAmount(paymentDTO.getTotalAmount());
-            payment.setPayType(random.nextInt(7)+1);
+            //payment.setAmount(paymentDTO.getAmount());
+           // payment.setPayType(random.nextInt(7)+1);
+            payment.setPayType(6); //支付宝
             payment.setCreator(UserContext.getUser());
             payment.setUpdater(UserContext.getUser());
 
 
             //支付成功
-            payment.setStatus(3);
+            payment.setStatus(2);
 
             //插入支付记录
             paymentMapper.insert(payment);
 
             //设置业务订单号（基于数据库生成的ID）
-            payment.setBizOrderNo(payment.getId());
-            paymentMapper.updateById(payment);
+//            payment.setBizOrderNo(payment.getId());
+//            paymentMapper.updateById(payment);
 
             paymentVO.setStatus(payment.getStatus());
             return Result.success(paymentVO);
@@ -71,4 +74,5 @@ public class PaymentServiceImpl implements PaymentService {
             return Result.error("支付失败");
         }
     }
+
 }
