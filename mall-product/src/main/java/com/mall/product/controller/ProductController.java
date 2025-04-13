@@ -83,7 +83,7 @@ public class ProductController {
     }
 
     @Operation(summary = "删除商品", description = "根据ID删除商品")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public Result remove(
             @Parameter(description = "商品ID", required = true, example = "1")
             @PathVariable Long id) {
@@ -93,7 +93,7 @@ public class ProductController {
     }
 
     @Operation(summary = "更新商品", description = "更新商品详细信息")
-    @PutMapping
+    @PutMapping("update")
     public Result update(
             @Parameter(description = "商品信息", required = true)
             @RequestBody ProductDTO productDTO) {
@@ -121,7 +121,6 @@ public class ProductController {
         pageDTO.getList().forEach(ProductDTO::getPriceYuan);
         return Result.success(pageDTO);
     }
-
 
     @Operation(summary = "分类分页查询", description = "按分类分页查询商品")
     @GetMapping("/select/page/{categoryId}")

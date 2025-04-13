@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * 功能描述:
  */
 @RestController
-@RequestMapping("/store/api/admin")
+@RequestMapping("/staff/api/admin")
 @Tag(name = "员工管理接口")
 public class StaffAdminController {
 

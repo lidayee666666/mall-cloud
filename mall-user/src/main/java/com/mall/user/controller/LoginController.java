@@ -18,18 +18,18 @@ public class LoginController {
 
     @Autowired
     private StoreClient storeClient;
+
     @Autowired
     private LoginService loginService;
-    /**
-     * 接收 username、password、VerKey、Yzm，返回:
-     * jwtToken
-     * id
-     * username
-     * phone
-     * balance
-     */
+
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @GetMapping("/checkStoreStaff")
+    @Operation(summary = "检查是否是商家员工")
+    Result<String> checkStoreStaff(){
+        return storeClient.checkStoreStaff();
+    }
 
     @PostMapping("/login")
     public Result<Map<String, String>> login(@RequestBody Map<String, String> map) {
