@@ -155,5 +155,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return response;
     }
 
+    @Override
+    public Long getCommentCount() {
+        long res = commentMapper.selectList(new QueryWrapper<Comment>().eq("user_id", UserContext.getUser())).size();
+        return res;
+    }
+
 
 }
