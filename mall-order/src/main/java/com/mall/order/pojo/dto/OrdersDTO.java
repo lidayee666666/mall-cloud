@@ -12,6 +12,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Schema(name = "OrdersDTO", description = "订单DTO")
 public class OrdersDTO {
+
     @Schema(description = "key：商品id，value：商品购买数量")
     private Map<Long, Integer> items;
 

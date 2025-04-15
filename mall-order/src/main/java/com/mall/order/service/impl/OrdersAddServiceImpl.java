@@ -19,12 +19,14 @@ import java.util.Map;
 
 @Service
 public class OrdersAddServiceImpl implements OrdersAddService {
+
     @Autowired
     private ProductClient productClient;
     @Autowired
     private OrdersMapper ordersMapper;
     @Autowired
     private OrderDetailMapper orderDetailMapper;
+
 
     @Override
     public Result<String> addOrders(OrdersDTO ordersDTO) {
