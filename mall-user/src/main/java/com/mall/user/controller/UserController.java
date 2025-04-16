@@ -114,8 +114,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("/findUserComment")
+    @Operation(summary = "查询评论")
+    public Result<List<CommentVO>>findComment(){
+        log.info("查询评论");
+        //后端传回来id user.img user.Nickname commentTime Content replyCount
+        List<CommentVO> commentVOSList=userService.findUserComment();
+        return Result.success(commentVOSList);
+    }
+
     @GetMapping("/findComment")
-    @Operation(summary = "查询评论") // 替换 @ApiOperation
+    @Operation(summary = "查询评论")
     public Result<List<CommentVO>>findComment(Long productId){
         log.info("查询评论");
         //后端传回来id user.img user.Nickname commentTime Content replyCount
