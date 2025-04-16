@@ -39,6 +39,6 @@ douyinmall:
       - /ai/api/**
       - /users/api/findComment
       - /users/api/findSecondComment
-      - /users/api/getCommentCount
+      - /users/api/getCommentCount/**
 
 
