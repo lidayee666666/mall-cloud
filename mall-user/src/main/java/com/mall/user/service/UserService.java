@@ -21,4 +21,6 @@ public interface UserService extends IService<User> {
     Map<String, Object> pwdInfo();
 
     Long getCommentCount(Long productId);
+
+    List<CommentVO> findUserComment();
 }

@@ -19,6 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -103,12 +106,14 @@ public class ProductController {
     }
 
     @Operation(summary = "分页查询", description = "通用商品分页查询")
-    @GetMapping("/select/page/{category}")
+    @GetMapping("/select/byCategoryPage/{category}")
     public Result<PageDTO<ProductDTO>> queryProductByPage(
             @Parameter(description = "分页参数") PageQuery query, @PathVariable String category) {
-        //Page<Product> result = productService.page(query.toMpPage("update_time", false));
-       // PageDTO<ProductDTO> pageDTO = PageDTO.of(result, ProductDTO.class);
-        //pageDTO.getList().forEach(ProductDTO::getPriceYuan);
+        try {
+            category = URLDecoder.decode(category, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            log.error("URL解码失败", e);
+        }
         return Result.success(productService.guessYou(query,category));
     }
 
