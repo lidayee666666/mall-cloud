@@ -151,7 +151,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 构造返回数据
         Map<String, Object> response = new HashMap<>();
         response.put("username", user.getUsername());
-        response.put("account", user.getUsername());
+        response.put("nickname", user.getNickname());
         return response;
     }
 
