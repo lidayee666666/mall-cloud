@@ -142,9 +142,9 @@ public class UserController {
         return userService.getById(id);
     }
 
-    @GetMapping("/getCommentCount")
-    public Result<Long> getCommentCount(){
-        return Result.success(userService.getCommentCount());
+    @GetMapping("/getCommentCount/{id}")
+    public Result<Long> getCommentCount(@PathVariable("id") Long productId){
+        return Result.success(userService.getCommentCount(productId));
     }
 
 }
