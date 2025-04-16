@@ -77,5 +77,16 @@ UPDATE `mall-product`.`product` SET `image` =
                                             WHEN id = 3053 THEN 'http://img.alicdn.com/img/i1/3526856527/O1CN01Pix6NN1y5QA5Q5fnG_!!4611686018427383631-0-saturn_solar.jpg_580x580q90.jpg_.webp'
                                             WHEN id = 3100 THEN 'https://g-search3.alicdn.com/img/bao/uploaded/i4/i2/6000000003611/O1CN01wQF9tU1cXtEvALiWW_!!6000000003611-2-mia.png'
                                             -- 默认图片
-                                            ELSE 'https://img.alicdn.com/bao/uploaded/i1/2217844048986/O1CN01Eqg58q2GFe0JWXDMY_!!0-item_pic.jpg_460x460q90.jpg_.webp'
+                                            ELSE 'https://img13.360buyimg.com/n1/s450x450_jfs/t1/174456/35/5978/234927/5efbf28cEbf04a25a/e2bcc4110f76b2d8.jpg'
                                             END;
+
+
+
+
+
+
+
+
+
+update product set image='https://img.alicdn.com/bao/uploaded/i2/2213190082472/O1CN01U8H5AD1U8DsFGPfx2_!!2213190082472-0-tblite.jpg_460x460q90.jpg_.webp'
+where image='https://img.alicdn.com/bao/uploaded/i1/2217844048986/O1CN01Eqg58q2GFe0JWXDMY_!!0-item_pic.jpg_460x460q90.jpg_.webp'

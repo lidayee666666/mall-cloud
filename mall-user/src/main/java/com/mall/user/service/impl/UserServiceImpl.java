@@ -161,5 +161,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return res;
     }
 
+    @Override
+    public List<CommentVO> findUserComment() {
+        List<Comment> res = commentMapper.selectList(new QueryWrapper<Comment>().eq("user_id", UserContext.getUser()));
+        List<CommentVO> commentVOS = BeanUtils.copyToList(res, CommentVO.class);
+        return commentVOS;
+    }
+
 
 }
