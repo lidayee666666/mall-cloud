@@ -44,6 +44,7 @@ public class UserController {
         return Result.success(user);
     }
 
+
     @GetMapping("/findPasswordById")
     @Operation(summary = "查询用户信息", description = "根据用户ID获取用户密码") // 替换 @ApiOperation
     public Result<Integer>findPasswordById(@RequestHeader("Authorization") String token,
@@ -76,17 +77,18 @@ public class UserController {
             log.error("根据 ID 查找密码时发生异常: {}", e.getMessage(), e);
             return Result.error("服务器内部错误");
         }
-
     }
+
+
     @PutMapping("/savePwd")
     @Operation(summary = "修改用户信息", description = "修改密码") // 替换 @ApiOperation
-    public Result<Integer>savePwd(String newPassword){
+    public Result<String>savePwd(String newPassword){
         //根据id修改密码 成功返回200 不成功返回201
         log.info("修改密码");
         String encodedPassword = passwordEncoder.encode(newPassword);
         boolean isUpdate= userService.savePwd(UserContext.getUser(),encodedPassword);
         if(isUpdate) {
-            return Result.success(200);
+            return Result.success("修改成功");
         }else {
             return Result.error("修改失败");
         }
@@ -142,8 +144,8 @@ public class UserController {
 
     @PostMapping("/updateUser")
     @Operation(summary = "用户修改个人信息")
-    public Result<Integer> updateUser(@RequestBody User user){
-        return Result.success(userService.updateById(user) ?1:0);
+    public Result<String> updateUser(@RequestBody User user){
+        return Result.success(userService.updateById(user) ?"修改成功":"修改失败");
     }
 
     @GetMapping("/users/api/{id}")
