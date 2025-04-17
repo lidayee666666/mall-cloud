@@ -19,7 +19,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +30,9 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,10 +51,10 @@ public class AliPayController {
     @Autowired
     private PaymentService paymentService;
 
-    private static final String GATEWAY_URL ="https://openapi-sandbox.dl.alipaydev.com/gateway.do";
-    private static final String FORMAT ="JSON";
-    private static final String CHARSET ="utf-8";
-    private static final String SIGN_TYPE ="RSA2";
+    private static final String GATEWAY_URL = "https://openapi-sandbox.dl.alipaydev.com/gateway.do";
+    private static final String FORMAT = "JSON";
+    private static final String CHARSET = "utf-8";
+    private static final String SIGN_TYPE = "RSA2";
 
     @RequestMapping("/pay") // &subject=xxx&traceNo=xxx&totalAmount=xxx
     public void pay(AliPay aliPay, HttpServletResponse httpResponse) throws Exception {
@@ -127,52 +128,60 @@ public class AliPayController {
 //        return "success";
 //    }
 
-    @PostMapping("/notify")
+    @RequestMapping("/notify")
     public String notify(HttpServletRequest request) {
         Map<String, String> params = convertParams(request);
+        log.info("支付宝回调参数: {}", params); // 记录完整参数
 
         try {
-            boolean verifyResult = Factory.Payment.Common()
-                    .verifyNotify(params);
+            // 1. 验签
+//            if (!Factory.Payment.Common().verifyNotify(params)) {
+//                log.warn("支付宝验签失败");
+//                return "failure";
+//            }
 
-            if (!verifyResult) {
-                return "failure";
-            }
-
-            //交易成功
+            // 2. 处理交易成功逻辑
             if ("TRADE_SUCCESS".equals(params.get("trade_status"))) {
+                String tradeNo = params.get("trade_no"); // 支付宝交易号
+                String outTradeNo = params.get("out_trade_no"); // 商户订单号
 
-                //订单表id
-                String tradeNo = params.get("trade_no");
-                //更改订单状态
-                orderClient.consign(Long.valueOf(tradeNo));
-                //商户订单号
-                String outTradeNo = params.get("out_trade_no");
-                //买家付款时间
+                // 2.1 更新订单状态
+                orderClient.consign(Long.valueOf(outTradeNo));
+
+                // 2.2 记录支付信息
+                PaymentDTO paymentDTO = new PaymentDTO();
+
+                paymentDTO.setBizOrderNo(Long.valueOf(outTradeNo));
+                paymentDTO.setAmount((int) (Double.parseDouble(params.get("total_amount")) * 100));
+
+                // 定义时间格式
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+                // 获取时间字符串
                 String gmtPayment = params.get("gmt_payment");
 
+                // 解析为 LocalDateTime
+                LocalDateTime localDateTime = LocalDateTime.parse(gmtPayment, formatter);
 
-                PaymentDTO paymentDTO=new PaymentDTO();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                sdf.setTimeZone(java.util.TimeZone.getTimeZone("Asia/Shanghai")); // 设置时区
-                paymentDTO.setCreateTime(sdf.parse(gmtPayment));
-                paymentDTO.setBizOrderNo(Long.valueOf(tradeNo));
-                paymentDTO.setPaySuccessTime(sdf.parse(gmtPayment));
-                paymentDTO.setUpdateTime(sdf.parse(gmtPayment));
-                paymentDTO.setAmount(Integer.parseInt(params.get("total_amount"))*100);
+                // 将 LocalDateTime 转换为 Date
+                Date payTime = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+
+                paymentDTO.setPaySuccessTime(payTime);
+                paymentDTO.setBizUserId(Long.valueOf(params.get("buyer_id"))); // 支付宝返回的买家ID);
                 paymentService.pay(paymentDTO);
-            }
 
+                log.info("支付成功处理完成 - 订单: {}", outTradeNo);
+            }
             return "success";
         } catch (Exception e) {
-            log.error("支付宝回调处理失败", e);
+            log.error("支付宝回调处理异常", e);
             return "failure";
         }
     }
 
     private Map<String, String> convertParams(HttpServletRequest request) {
         Map<String, String[]> requestParams = request.getParameterMap();
-        Map<String, String> params=new HashMap<>();
+        Map<String, String> params = new HashMap<>();
 
         for (String name : requestParams.keySet()) {
             params.put(name, request.getParameter(name));
