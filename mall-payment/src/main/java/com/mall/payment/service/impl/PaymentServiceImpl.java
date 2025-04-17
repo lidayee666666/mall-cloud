@@ -42,35 +42,29 @@ public class PaymentServiceImpl implements PaymentService {
             payment.setPayOrderNo((long) (Math.random() * 900_000_000) + 100_000_000);
             payment.setPayChannelCode("0");
 
-            payment.setBizUserId(UserContext.getUser());
             //payment.setAmount(paymentDTO.getAmount());
            // payment.setPayType(random.nextInt(7)+1);
             payment.setPayType(6); //支付宝
             payment.setCreator(UserContext.getUser());
             payment.setUpdater(UserContext.getUser());
 
-
             //支付成功
-            payment.setStatus(2);
+            payment.setStatus(3);
 
             //插入支付记录
             paymentMapper.insert(payment);
 
-            //设置业务订单号（基于数据库生成的ID）
-//            payment.setBizOrderNo(payment.getId());
-//            paymentMapper.updateById(payment);
 
             paymentVO.setStatus(payment.getStatus());
             return Result.success(paymentVO);
         }catch (Exception e) {
-            log.error("支付失败", e);
-            payment.setStatus(0);
-            paymentMapper.insert(payment);
+            log.error("支付宝异步失败", e);
 
+            payment.setPayType(6); //支付宝
             //设置业务订单号（基于数据库生成的ID）
             payment.setBizOrderNo(payment.getId());
-            paymentMapper.updateById(payment);
-            paymentVO.setStatus(payment.getStatus());
+            paymentVO.setStatus(3);
+            paymentMapper.insert(payment);
             return Result.error("支付失败");
         }
     }

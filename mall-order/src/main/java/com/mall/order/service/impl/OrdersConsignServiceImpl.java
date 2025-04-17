@@ -17,7 +17,7 @@ public class OrdersConsignServiceImpl implements OrdersConsignService {
     @Override
     public Result<String> consign(Long orderId) {
         Orders orders = ordersMapper.selectById(orderId);
-        orders.setStatus(3);
+        orders.setStatus(2);
         Date date = new Date();
         orders.setUpdateTime(date);
         orders.setConsignTime(date);
