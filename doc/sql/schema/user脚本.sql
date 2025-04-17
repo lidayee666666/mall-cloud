@@ -92,7 +92,7 @@ CREATE TABLE `comment` (
   `parent_id` bigint unsigned DEFAULT NULL COMMENT '父评论ID，一级评论为NULL或0',
   `reply_count` int unsigned NOT NULL DEFAULT '0' COMMENT '回复数量',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='评论表';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='评论表';
 
 /*Data for the table `comment` */
 
@@ -107,7 +107,11 @@ insert  into `comment`(`id`,`product_id`,`user_id`,`content`,`com_time`,`parent_
 (8,3099,1,'666','2025-04-07 18:51:13',NULL,0),
 (9,3023,1,'666','2025-04-07 19:46:08',NULL,0),
 (10,3001,1,'666','2025-04-10 13:27:19',NULL,1),
-(12,3001,1,'555','2025-04-10 13:46:00',10,0);
+(12,3001,1,'555','2025-04-10 13:46:00',10,0),
+(13,3062,1,'666','2025-04-16 20:21:42',NULL,0),
+(14,3019,1,'5656','2025-04-16 21:27:28',NULL,0),
+(15,3019,1,'666','2025-04-16 21:30:54',NULL,1),
+(16,3019,1,'用过的都说好!!!','2025-04-16 21:31:21',15,0);
 
 /*Table structure for table `user` */
 
@@ -133,7 +137,7 @@ CREATE TABLE `user` (
 /*Data for the table `user` */
 
 insert  into `user`(`id`,`avatar`,`username`,`password`,`phone`,`user_type`,`is_platform_admin`,`create_time`,`update_time`,`status`,`balance`,`nickname`) values 
-(1,'https://feifan-longye.oss-cn-beijing.aliyuncs.com/defaultAvatar.jpg','customer1','$2a$10$fOhr.BFWkCxYOhWKUV6yi.N4ARsXinKQ3rYvFHZ9DFmJTcfDUAulS','13800001111','customer',0,'2025-04-10 12:29:55','2025-04-10 12:29:55',1,1000000,'default nickname'),
+(1,'https://feifan-longye.oss-cn-beijing.aliyuncs.com/1744870431773.gif','customer1','$2a$10$fOhr.BFWkCxYOhWKUV6yi.N4ARsXinKQ3rYvFHZ9DFmJTcfDUAulS','17789226278','customer',0,'2025-04-10 12:29:55','2025-04-10 12:29:55',1,1,'lidayee'),
 (2,'https://feifan-longye.oss-cn-beijing.aliyuncs.com/defaultAvatar.jpg','customer2','$2a$10$fOhr.BFWkCxYOhWKUV6yi.N4ARsXinKQ3rYvFHZ9DFmJTcfDUAulS','13800002222','customer',0,'2025-04-10 12:29:55','2025-04-10 12:29:55',1,500000,'default nickname'),
 (3,'https://feifan-longye.oss-cn-beijing.aliyuncs.com/defaultAvatar.jpg','store_staff','$2a$10$fOhr.BFWkCxYOhWKUV6yi.N4ARsXinKQ3rYvFHZ9DFmJTcfDUAulS','13800003333','staff',0,'2025-04-10 12:29:55','2025-04-10 12:29:55',1,0,'default nickname'),
 (4,'https://feifan-longye.oss-cn-beijing.aliyuncs.com/defaultAvatar.jpg','platform_admin','$2a$10$fOhr.BFWkCxYOhWKUV6yi.N4ARsXinKQ3rYvFHZ9DFmJTcfDUAulS','13800004444','customer',1,'2025-04-10 12:29:55','2025-04-10 12:29:55',1,0,'default nickname'),
