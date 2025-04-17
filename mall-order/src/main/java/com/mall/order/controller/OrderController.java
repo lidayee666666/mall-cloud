@@ -1,16 +1,13 @@
 package com.mall.order.controller;
 
-import com.mall.api.domain.entity.OrderDetailProduct;
 import com.mall.common.result.Result;
 import com.mall.order.pojo.OrderDetail;
-import com.mall.order.pojo.Orders;
 import com.mall.order.pojo.dto.OrdersDTO;
 import com.mall.order.pojo.vo.OrderDetailVO;
 import com.mall.order.pojo.vo.OrdersVO;
 import com.mall.order.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

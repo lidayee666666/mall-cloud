@@ -55,7 +55,7 @@ public class AliPayController {
     private static final String CHARSET ="utf-8";
     private static final String SIGN_TYPE ="RSA2";
 
-    @GetMapping("/pay") // &subject=xxx&traceNo=xxx&totalAmount=xxx
+    @RequestMapping("/pay") // &subject=xxx&traceNo=xxx&totalAmount=xxx
     public void pay(AliPay aliPay, HttpServletResponse httpResponse) throws Exception {
 
         AlipayClient alipayClient = new DefaultAlipayClient(GATEWAY_URL, aliPayConfig.getAppId(),
