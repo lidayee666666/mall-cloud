@@ -18,6 +18,9 @@ public interface ProductClient {
     @GetMapping("/products/order/api/{id}")
     Result<OrderDetailProduct> getById(@PathVariable("id") Long id);
 
+    @GetMapping("/products/order/api/getProductByName/{name}")
+    Result<OrderDetailProduct> getByName(@PathVariable("name") String name);
+
     @GetMapping("/products/api/check/{productId}")
     boolean checkProductExists(@PathVariable Long productId);
 
@@ -60,4 +63,7 @@ public interface ProductClient {
             @Parameter(description = "分页参数") PageQuery query,
             @Parameter(description = "分类ID", required = true, example = "101")
             @PathVariable Long categoryId);
+
+    @GetMapping("/products/order/api/decreProductStockByName/{name}")
+    Integer decrement(@PathVariable("name")String name);
 }

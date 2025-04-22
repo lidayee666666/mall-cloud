@@ -8,6 +8,10 @@ package com.mall.payment.controller;
 
 import com.alipay.easysdk.factory.Factory;
 import com.mall.api.client.OrderClient;
+import com.mall.api.client.ProductClient;
+import com.mall.api.domain.entity.OrderDetailProduct;
+import com.mall.common.result.Result;
+import com.mall.common.utils.UserContext;
 import com.mall.payment.config.AliPayConfig;
 import com.mall.payment.pojo.dto.PaymentDTO;
 import com.mall.payment.pojo.entity.AliPay;
@@ -43,6 +47,9 @@ import java.util.Map;
 public class AliPayController {
 
     @Autowired
+    ProductClient productClient;
+
+    @Autowired
     OrderClient orderClient;
 
     @Resource
@@ -57,11 +64,30 @@ public class AliPayController {
     private static final String SIGN_TYPE = "RSA2";
 
     @RequestMapping("/pay") // &subject=xxx&traceNo=xxx&totalAmount=xxx
-    public void pay(AliPay aliPay, HttpServletResponse httpResponse) throws Exception {
+    public Result<Object> pay(AliPay aliPay, HttpServletResponse httpResponse) throws Exception {
+        // 1. 获取当前用户ID
+        Long userId = UserContext.getUser();
+        if (userId == null) {
+            return Result.error("用户未登录");
+        }
+
+
 
         AlipayClient alipayClient = new DefaultAlipayClient(GATEWAY_URL, aliPayConfig.getAppId(),
                 aliPayConfig.getAppPrivateKey(), FORMAT, CHARSET, aliPayConfig.getAlipayPublicKey(), SIGN_TYPE);
+
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+
+        // 2. 调用商品服务获取商品信息
+        Result<OrderDetailProduct> productResult = productClient.getByName(aliPay.getSubject());
+        if (productResult == null || productResult.getCode() != 1 || productResult.getData() == null) {
+            return Result.error("商品信息获取失败");
+        }
+
+        OrderDetailProduct product = productResult.getData();
+        if (product.getStock()<1)return Result.error("商品库存不足");
+
+
         request.setNotifyUrl(aliPayConfig.getNotifyUrl());
         request.setBizContent("{\"out_trade_no\":\"" + aliPay.getTradeNo() + "\","
                 + "\"total_amount\":\"" + aliPay.getTotalAmount() + "\","
@@ -80,6 +106,8 @@ public class AliPayController {
         httpResponse.getWriter().write(form);
         httpResponse.getWriter().flush();
         httpResponse.getWriter().close();
+
+        return null;
     }
 
 
@@ -147,6 +175,9 @@ public class AliPayController {
 
                 // 2.1 更新订单状态
                 orderClient.payUpdate(Long.valueOf(outTradeNo));
+
+                //扣减商品库存
+                productClient.decrement(params.get("subject"));//根据商品名称扣减库存,有可能是多个商品,需要split
 
                 // 2.2 记录支付信息
                 PaymentDTO paymentDTO = new PaymentDTO();

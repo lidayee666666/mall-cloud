@@ -35,14 +35,16 @@ public class OrderDetailProductController {
         return Result.success(dto);
     }
 
-    /*private OrderDetailProduct convertToOrderDetailProduct(Product product) {
-        return new OrderDetailProduct(
-                product.getId(),
-                product.getName(),
-                product.getPriceYuan(),
-                product.getStock(),
-                product.getImage(),
-                product.getStatus()
-        );
-    }*/
+
+    @GetMapping("/products/order/api/getProductByName/{name}")
+    Result<OrderDetailProduct> getByName(@PathVariable("name") String name){
+        return productService.getByName(name);
+    }
+
+
+    @GetMapping("/products/order/api/decreProductStockByName/{name}")
+    Integer decrement(@PathVariable("name")String name){
+        return productService.decreProductStockByName(name);
+    }
+
 }
