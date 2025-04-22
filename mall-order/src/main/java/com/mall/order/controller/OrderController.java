@@ -33,7 +33,7 @@ public class OrderController {
 
     @Operation(summary = "根据用户Id获取其订单")
     @PostMapping("/infoByUserId")
-    public Result<List<OrdersVO>> getOrderInfoByUserId() {
+    public Result<List<OrderDetailVO>> getOrderInfoByUserId() {
         return Result.success(orderInfoService.getOrderInfoByUserId());
     }
 
@@ -53,14 +53,14 @@ public class OrderController {
     @Autowired
     private OrdersPaidService ordersPaidService;
 
-    @Operation(summary = "支付结束后更改订单状态和支付时间")
-    @PostMapping("/paymentUpdate")
-    public Result<String> updateOrdersPaid(@RequestBody Long orderId) {
-        return ordersPaidService.updateOrdersPaid(orderId);
-    }
-
     @Autowired
     private OrdersConsignService ordersConsignService;
+
+    @Operation(summary = "发货后更改订单状态和发货时间")
+    @PostMapping("/payUpdate/{id}")
+    public Result<String> payUpdate(@PathVariable Long id) {
+        return ordersPaidService.updateOrdersPaid(id);
+    }
 
     @Operation(summary = "发货后更改订单状态和发货时间")
     @PostMapping("/consignUpdate/{id}")

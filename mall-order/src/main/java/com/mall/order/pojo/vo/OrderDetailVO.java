@@ -15,8 +15,15 @@ import java.util.Date;
 @Data
 public class OrderDetailVO {
     private Long id;
+    private Long orderId;
+
     private String name;
+
+    private BigDecimal totalFeeYuan;
+    private Integer paymentType;//支付类型
+    private Integer status;//订单状态
     private Integer num;
+
     private BigDecimal priceYuan;
     private String image;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
@@ -27,7 +34,9 @@ public class OrderDetailVO {
         vo.setName(detail.getName());
         vo.setNum(detail.getNum());
         vo.setPriceYuan(detail.getPriceYuan());
+        vo.setTotalFeeYuan(detail.getPriceYuan());
         vo.setImage(detail.getImage());
+        vo.setOrderId(detail.getOrderId());
         return vo;
     }
 }

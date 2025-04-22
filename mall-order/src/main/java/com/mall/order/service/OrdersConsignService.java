@@ -6,4 +6,5 @@ public interface OrdersConsignService {
     Result<String> consign(Long orderId);
 
     Integer getStatus(Long id);
+
 }

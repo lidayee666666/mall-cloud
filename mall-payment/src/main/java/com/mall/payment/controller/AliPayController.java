@@ -146,7 +146,7 @@ public class AliPayController {
                 String outTradeNo = params.get("out_trade_no"); // 商户订单号
 
                 // 2.1 更新订单状态
-                orderClient.consign(Long.valueOf(outTradeNo));
+                orderClient.payUpdate(Long.valueOf(outTradeNo));
 
                 // 2.2 记录支付信息
                 PaymentDTO paymentDTO = new PaymentDTO();

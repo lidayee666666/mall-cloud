@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(value = "mall-order")
 public interface OrderClient {
 
-    @Operation(summary = "发货后更改订单状态和发货时间")
-    @PostMapping("/orders/api/consignUpdate/{id}")
-    Result<String> consign(@PathVariable Long id);
+    @Operation(summary = "支付成功更改订单状态和修改时间")
+    @PostMapping("/orders/api/payUpdate/{id}")
+    Result<String> payUpdate(@PathVariable Long id);
 }

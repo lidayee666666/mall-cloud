@@ -58,22 +58,10 @@ public class OrdersAddServiceImpl implements OrdersAddService {
 
         Orders orders = new Orders();
         orders.setTotalFee(totalFee);
-        orders.setPaymentType(ordersDTO.getPaymentType());
+        //orders.setPaymentType(ordersDTO.getPaymentType());
         orders.setUserId(UserContext.getUser());
         orders.setStatus(1);//未付款
-//        Orders orders = new Orders(null,
-//                totalFee, // 总价
-//                ordersDTO.getPaymentType(),
-//                UserContext.getUser(),
-//                1,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null
-//        );
+
         ordersMapper.insert(orders);
         System.out.println(orders.getId());
 
