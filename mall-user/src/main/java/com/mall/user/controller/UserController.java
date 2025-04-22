@@ -4,6 +4,8 @@ import com.mall.common.result.Result;
 import com.mall.api.domain.entity.User;
 import com.mall.common.utils.UserContext;
 import com.mall.user.domain.vo.CommentVO;
+import com.mall.user.filter.SensitiveFilterResult;
+import com.mall.user.filter.SensitiveWordFilter;
 import com.mall.user.service.UserService;
 import com.mall.user.utils.JwtTool;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +28,9 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+
+    @Autowired
+    private SensitiveWordFilter sensitiveWordFilter;
 
     @Autowired
     private JwtTool jwtTool;
@@ -105,10 +110,19 @@ public class UserController {
     @GetMapping("/saveComment")
     @Operation(summary = "保存评论")
     public Result<Integer> saveComment(Long productId,String content,Long parentId){
-        //前端传authorization（UsertToken)productId
-        // content  三个变量 后端根据usertoken解析userid
+        SensitiveFilterResult filterResult = sensitiveWordFilter.filterContent(content);
+
+        // 2. 判断是否包含敏感词
+        if (filterResult.containsSensitive()) {
+            log.warn("拦截敏感评论：{} | 敏感词：{}", content, filterResult.getSensitiveWords());
+            return Result.error("评论包含敏感内容：" + filterResult.getSensitiveWords());
+        }
+
+        String safeContent = filterResult.getFilteredContent();
+
         log.info("保存评论");
-        Integer status=userService.saveComment(UserContext.getUser(),productId,content,parentId);
+
+        Integer status=userService.saveComment(UserContext.getUser(),productId,safeContent,parentId);
         if(status==1) {
             return Result.success(200);
         }else {
