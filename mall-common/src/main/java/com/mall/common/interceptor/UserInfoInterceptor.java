@@ -9,6 +9,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class UserInfoInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
         // 1.获取请求头中的用户信息
         String userInfo = request.getHeader("user-info");
         // 2.判断是否为空

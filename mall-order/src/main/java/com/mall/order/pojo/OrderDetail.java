@@ -24,9 +24,9 @@ public class OrderDetail {
     private Long userId;
     private Long productId;
     private Integer num;
-    private String name;
+    private String name;//商品名称
     private Integer price; // 单位：分
-    private String image;
+    private String image;//商品图片
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")

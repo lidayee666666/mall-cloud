@@ -18,6 +18,7 @@ public class OrdersPaidServiceImpl implements OrdersPaidService {
     public Result<String> updateOrdersPaid(Long orderId) {
         Orders orders = ordersMapper.selectById(orderId);
         orders.setStatus(2);
+        orders.setPaymentType(6);
         Date date = new Date();
         orders.setUpdateTime(date);
         orders.setPayTime(date);

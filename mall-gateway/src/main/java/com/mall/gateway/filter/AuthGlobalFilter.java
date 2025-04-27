@@ -1,6 +1,5 @@
 package com.mall.gateway.filter;
 
-//import com.mall.common.exception.UnauthorizedException;
 import com.mall.gateway.utils.CollUtils;
 import com.mall.gateway.config.AuthProperties;
 import com.mall.gateway.utils.JwtTool;
@@ -39,8 +38,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
             return chain.filter(exchange);
         }
-//        System.out.println("需要过滤");
-        // 3.获取请求头中的token
+
         String token = null;
         List<String> headers = request.getHeaders().get("Authorization");
         System.out.println(headers);
@@ -63,6 +61,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         System.out.println("userId = " + userId);
         System.out.println("token 有效");
         String userInfo = userId.toString();
+
         // 修改转发逻辑，确保头信息传递
         ServerWebExchange ex = exchange.mutate()
                 .request(originalRequest -> originalRequest.build().mutate()

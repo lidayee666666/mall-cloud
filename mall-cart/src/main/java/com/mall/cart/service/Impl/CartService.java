@@ -205,11 +205,13 @@ public class CartService implements ICartService {
 
         // 从缓存中获取购物车数量
         String cacheKey = "cart:count:" + userId;
+
         String cachedCount = stringRedisTemplate.opsForValue().get(cacheKey);
         if (cachedCount != null) {
             return Result.success(Integer.parseInt(cachedCount));
         }
 
+        //缓存穿透、缓存击穿、缓存雪崩
         // 缓存未命中，查询数据库
         QueryWrapper<Cart> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId)
@@ -241,7 +243,6 @@ public class CartService implements ICartService {
 
         // 3. 更新缓存
         updateCartCountCache(userId);
-
 
         cartClearVO.setStatus(1);
         return Result.success(cartClearVO);
