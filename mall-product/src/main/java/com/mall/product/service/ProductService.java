@@ -1,8 +1,10 @@
 package com.mall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mall.api.domain.entity.OrderDetailProduct;
 import com.mall.common.domain.PageDTO;
 import com.mall.common.domain.PageQuery;
+import com.mall.common.result.Result;
 import com.mall.product.pojo.dto.ProductDTO;
 import com.mall.product.pojo.dto.QueryProductParams;
 import com.mall.product.pojo.entity.Product;
@@ -31,4 +33,8 @@ public interface ProductService extends IService<Product> {
     boolean checkProductExists(Long productId) ;
 
     PageDTO<ProductDTO> guessYou(PageQuery query, String category);
+
+    Result<OrderDetailProduct> getByName(String name);
+
+    Integer decreProductStockByName(String name);
 }

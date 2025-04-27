@@ -22,7 +22,7 @@ douyinmall:
     tokenTTL: 30m # 登录有效期
   auth:
     excludePaths:
-      - /alipay/**
+      - /alipay/*
       - /*/v3/api-docs/**
       - /v3/api-docs/**
       - /doc.html

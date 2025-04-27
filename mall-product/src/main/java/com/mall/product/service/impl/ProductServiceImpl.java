@@ -3,10 +3,12 @@ package com.mall.product.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.api.client.StoreClient;
+import com.mall.api.domain.entity.OrderDetailProduct;
 import com.mall.api.domain.entity.SimpleStore;
 import com.mall.api.domain.entity.Staff;
 import com.mall.common.constant.MessageConstant;
@@ -57,6 +59,9 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ProductMapper productMapper;
 
     @Override
     public List<String> getRecommends(QueryProductParams query) throws IOException {
@@ -109,6 +114,35 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         // 2.封装并返回
         PageDTO<ProductDTO> pageDTO = PageDTO.of(result, ProductDTO.class);
         return pageDTO;
+    }
+
+    @Override
+    public Result<OrderDetailProduct> getByName(String name) {
+        try {
+            QueryWrapper<Product> qw=new QueryWrapper<>();
+            qw.eq("name",name);
+            Product product = productMapper.selectOne(qw);
+            OrderDetailProduct bean = BeanUtil.toBean(product, OrderDetailProduct.class);
+            return Result.success(bean);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 根据商品名称扣减库存
+     * @param name
+     * @return
+     */
+    @Override
+    public Integer decreProductStockByName(String name) {
+        QueryWrapper<Product> qw=new QueryWrapper<>();
+        qw.eq("name",name);
+        Product product = productMapper.selectOne(qw);
+        product.setStock(product.getStock()-1);
+        int i = productMapper.updateById(product);
+        return i;
     }
 
     List<String> getRecommends(SearchResponse response) {

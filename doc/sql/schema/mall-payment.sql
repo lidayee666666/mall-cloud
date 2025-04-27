@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `payment` (
                                          `pay_channel_code` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '支付渠道编码',
     `amount` INT NOT NULL COMMENT '支付金额，单位/分',
     `pay_type` tinyint NOT NULL DEFAULT '5' COMMENT '支付类型，1：h5,2:小程序，3：公众号，4：扫码，5：余额支付，6：支付宝，7：微信支付',
-    `status` tinyint NOT NULL DEFAULT '0' COMMENT '支付状态，0：待提交，1:待支付，2：支付超时或取消，3：支付成功，4：退款中，5：已退款',
+    `status` tinyint NOT NULL DEFAULT '0' COMMENT '支付状态，1:待支付，2：支付超时或取消，3：支付成功，4：退款中，5：已退款',
     `expand_json` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '拓展字段，用于传递不同渠道单独处理的字段',
     `result_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '第三方返回业务码',
     `result_msg` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '第三方返回提示信息',

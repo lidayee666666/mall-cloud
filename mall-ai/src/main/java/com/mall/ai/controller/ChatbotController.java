@@ -56,6 +56,7 @@ public class ChatbotController {
      * @throws InputRequiredException
      */
     public void streamCall(ResponseBodyEmitter emitter, String query) throws NoApiKeyException, InputRequiredException {
+
         // appId 填入百炼应用 ID
         ApplicationParam param = ApplicationParam.builder()
                 .appId("dcbf796c9540418998dc5f09f9b812eb")
@@ -65,7 +66,9 @@ public class ChatbotController {
 
         Application application = new Application();
         Flowable<ApplicationResult> result = application.streamCall(param);
+
         AtomicInteger counter = new AtomicInteger(0);
+
         result.blockingForEach(data -> {
             int newValue = counter.incrementAndGet();
             String resData = "id:" + newValue + "\nevent:result\n:HTTP_STATUS/200\ndata:" + new Gson().toJson(data) + "\n\n";
