@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -64,14 +65,13 @@ public class AliPayController {
     private static final String SIGN_TYPE = "RSA2";
 
     @RequestMapping("/pay") // &subject=xxx&traceNo=xxx&totalAmount=xxx
-    public Result<Object> pay(AliPay aliPay, HttpServletResponse httpResponse) throws Exception {
+    public Result<Object> pay(AliPay aliPay, HttpServletResponse httpResponse,@RequestHeader("user-info") String userInfo) throws Exception {
         // 1. 获取当前用户ID
-        Long userId = UserContext.getUser();
-        if (userId == null) {
-            return Result.error("用户未登录");
-        }
-
-
+//        Long userId = Long.parseLong(userInfo);
+//
+//        if (userId == null) {
+//            return Result.error("用户未登录");
+//        }
 
         AlipayClient alipayClient = new DefaultAlipayClient(GATEWAY_URL, aliPayConfig.getAppId(),
                 aliPayConfig.getAppPrivateKey(), FORMAT, CHARSET, aliPayConfig.getAlipayPublicKey(), SIGN_TYPE);

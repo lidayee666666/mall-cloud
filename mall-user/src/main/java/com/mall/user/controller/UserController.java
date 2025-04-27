@@ -113,10 +113,10 @@ public class UserController {
         SensitiveFilterResult filterResult = sensitiveWordFilter.filterContent(content);
 
         // 2. 判断是否包含敏感词
-        if (filterResult.containsSensitive()) {
-            log.warn("拦截敏感评论：{} | 敏感词：{}", content, filterResult.getSensitiveWords());
-            return Result.error("评论包含敏感内容：" + filterResult.getSensitiveWords());
-        }
+//        if (filterResult.containsSensitive()) {
+//            log.warn("拦截敏感评论：{} | 敏感词：{}", content, filterResult.getSensitiveWords());
+//            return Result.error("评论包含敏感内容：" + filterResult.getSensitiveWords());
+//        }
 
         String safeContent = filterResult.getFilteredContent();
 

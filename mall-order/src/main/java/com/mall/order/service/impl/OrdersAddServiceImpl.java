@@ -41,7 +41,9 @@ public class OrdersAddServiceImpl implements OrdersAddService {
         Map<OrderDetailProduct, Integer> orderDetailProducts = new HashMap<>();
         for (Map.Entry<Long, Integer> entry : items.entrySet()) {
             Long productId = entry.getKey();
+
             Integer quantity = entry.getValue();
+
             OrderDetailProduct orderDetailProduct = productClient.getById(productId).getData();
 
             if (orderDetailProduct == null) {
@@ -63,13 +65,11 @@ public class OrdersAddServiceImpl implements OrdersAddService {
         orders.setStatus(1);//未付款
 
         ordersMapper.insert(orders);
-        System.out.println(orders.getId());
 
         for (Map.Entry<OrderDetailProduct, Integer> entry : orderDetailProducts.entrySet()) {
+
             OrderDetailProduct product = entry.getKey();
 
-            OrderDetail detail = new OrderDetail();
-            detail.setPrice(product.getPrice()); // 存储分单位
             Integer quantity = entry.getValue();
 
             OrderDetail orderDetail = new OrderDetail(null,
@@ -84,6 +84,7 @@ public class OrdersAddServiceImpl implements OrdersAddService {
                     null
 
             );
+
             orderDetailMapper.insert(orderDetail);
         }
         return Result.success(String.valueOf(orders.getId()));

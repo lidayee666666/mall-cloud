@@ -13,4 +13,5 @@ public interface OrderClient {
     @Operation(summary = "支付成功更改订单状态和修改时间")
     @PostMapping("/orders/api/payUpdate/{id}")
     Result<String> payUpdate(@PathVariable Long id);
+
 }
