@@ -39,3 +39,12 @@ CREATE TABLE IF NOT EXISTS `order-detail` (
     PRIMARY KEY (`id`) USING BTREE,
     KEY `key_order_id` (`order_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='订单详情表';
+
+
+
+UPDATE `mall-order`.`order-detail` AS od
+    JOIN `mall-product`.`product` AS p ON od.product_id = p.id
+    SET od.image = p.image
+WHERE od.image = '' OR od.image IS NULL;
+
+alter table `order-detail` modify column image varchar(666)

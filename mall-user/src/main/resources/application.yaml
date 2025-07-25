@@ -2,6 +2,20 @@ server:
   port: 8081
 
 spring:
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080  # Sentinel控制台地址
+        port: 8719                # 本地启动的HTTP Server端口（默认8719）
+      eager: true
+      datasource:
+        flow:
+          nacos:
+            server-addr: localhost:8848   # Nacos服务地址
+            data-id: mall-user-sentinel-flow  # 规则dataId，建议用服务名区分
+            group-id: SENTINEL_GROUP      # 分组名，可自定义
+            data-type: json
+            rule-type: flow
   application:
     name: mall-user
   mail:
