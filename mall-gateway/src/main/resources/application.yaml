@@ -1,9 +1,21 @@
 server:
-  port: 8080
+  port: 8079
   max-http-header-size: 65536  # 恢复默认值
 
 spring:
   cloud:
+    sentinel:
+      datasource:
+        ds1:
+          nacos:
+            server-addr: localhost:8848
+            dataId: sentinel-rules
+            groupId: DEFAULT_GROUP
+            rule-type: flow
+      transport:
+        dashboard: localhost:8080  # Sentinel控制台地址
+        port: 8719                # 本地启动的HTTP Server端口（默认8719）
+      eager: true
     gateway:
       discovery:
         locator:

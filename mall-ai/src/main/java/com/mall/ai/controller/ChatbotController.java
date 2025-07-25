@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Tag(name = "AI管理")
+@Tag(name = "通义千问")
 @RestController
 @RequestMapping("/ai/api/chatbot")
 public class ChatbotController {
